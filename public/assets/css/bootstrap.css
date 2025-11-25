@@ -3971,11 +3971,11 @@ tbody.collapse.in {
     color: #ccc;
     background-color: transparent; }
   .navbar-default .navbar-toggle {
-    border-color: #222222; }
+    border-color: #777777; }
     .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
       background-color: #222222; }
     .navbar-default .navbar-toggle .icon-bar {
-      background-color: #222222; }
+      background-color: #777777; }
   .navbar-default .navbar-collapse,
   .navbar-default .navbar-form {
     border-color: transparent; }

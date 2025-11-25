@@ -19,3 +19,6 @@
 .timerBx span{padding:0 6px;}
 .swiper-pagination-bullet-active{background-color:#ffc000!important;}
 .swiper .swiper-wrapper{padding-bottom:20px;}
+.mockTests h4{padding-top:7px; font-size:20px;display:flex;justify-content:space-between;align-items:center;}
+.mockTests h4 .btn{padding:4px 12px;font-size:14px;font-weight:600;}
+.mockTests h4 .btn:hover{color:#000;}

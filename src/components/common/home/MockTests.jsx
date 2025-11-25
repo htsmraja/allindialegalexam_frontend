@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 
 
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 const MockTests = () => {
     return (
         <>
@@ -64,7 +65,7 @@ const MockTests = () => {
                                     <span>20 Min</span>
                                     <span>45 Sec</span>
                                 </div>
-                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 join now</h4>
+                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
                             </article>
                         </SwiperSlide>
                         {/* item end */}
@@ -84,7 +85,7 @@ const MockTests = () => {
                                     <span>20 Min</span>
                                     <span>45 Sec</span>
                                 </div>
-                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 join now</h4>
+                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
                             </article>
                         </SwiperSlide>
                         {/* item end */}                        
@@ -104,7 +105,7 @@ const MockTests = () => {
                                     <span>20 Min</span>
                                     <span>45 Sec</span>
                                 </div>
-                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 join now</h4>
+                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
                             </article>
                         </SwiperSlide>
                         {/* item end */}
@@ -124,7 +125,7 @@ const MockTests = () => {
                                     <span>20 Min</span>
                                     <span>45 Sec</span>
                                 </div>
-                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 join now</h4>
+                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
                             </article>
                         </SwiperSlide>
                         {/* item end */}
@@ -144,7 +145,7 @@ const MockTests = () => {
                                     <span>20 Min</span>
                                     <span>45 Sec</span>
                                 </div>
-                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 join now</h4>
+                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
                             </article>
                         </SwiperSlide>
                         {/* item end */}                        
@@ -164,7 +165,7 @@ const MockTests = () => {
                                     <span>20 Min</span>
                                     <span>45 Sec</span>
                                 </div>
-                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 join now</h4>
+                                <h4 style={{margin:'5px 0 0 0'}} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
                             </article>
                         </SwiperSlide>
                         {/* item end */}
