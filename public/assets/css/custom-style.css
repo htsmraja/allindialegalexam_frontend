@@ -1,0 +1,21 @@
+.themeColor{color:#ffc000;}
+.innerPageBx #page-header.page-header-stick{position:relative;background:#1c1c1c;}
+.innerPageBx .header-holder{border-top:1px solid #777777;}
+.intro-block-slide{position:relative;}
+.introBx{position:relative;z-index:9;}
+.mainBanner .swiper-button-prev,.mainBanner .swiper-button-next{background:#fff;max-width:30px;border-radius:4px;opacity:0;transition:all .5s ease-in-out;}
+.mainBanner:hover .swiper-button-prev,.mainBanner:hover .swiper-button-next{opacity:1;transition:all .5s ease-in-out;}
+.mainBanner .swiper-button-prev svg,.mainBanner .swiper-button-next svg{max-width:12px;}
+.account-box{background:#fff;padding:25px;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.account-box .profile-img{width:90px;height:90px;border-radius:50%;margin-bottom:5px}
+.account-box .nav-pills>li>a{text-align:left;font-size:15px;font-weight:600;border-radius:0;padding:9px 15px;color:#000}
+.account-box .nav-pills>li.active>a{background-color:#ffc000;color:#000}
+.account-box .section-title{margin-top:0;font-size:20px;font-weight:600;border-bottom:2px solid #eee;padding-bottom:10px}
+.account-box .info-row{margin-bottom:12px}
+.account-box .info-label{font-weight:700}
+.mockTests .news-post .aligncenter{margin:-31px -30px 20px;}
+.mockTests .news-post{padding:25px 15px 15px 15px!important;}
+.timerBx{padding:1px 0;background:#222222;color:#fff;text-align:center;font-size:13px;}
+.timerBx span{padding:0 6px;}
+.swiper-pagination-bullet-active{background-color:#ffc000!important;}
+.swiper .swiper-wrapper{padding-bottom:20px;}
