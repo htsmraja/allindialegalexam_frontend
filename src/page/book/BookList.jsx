@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CommonLayout from '../../components/common_for_website/CommonLayout'
 import { Link } from 'react-router-dom'
+import { useCommonContext } from '../../context/commonContext';
 
 const BookList = () => {
+  const { getBookList, bookList } = useCommonContext();
+  const filters = { page: 1 };
+
+  useEffect(() => {
+    getBookList(filters);
+  }, []);
+
+  const key = JSON.stringify(filters);
+
+  // Always access bookList.data
+  const books = bookList?.data?.[key]?.products || [];
+
+  console.log(books, "books");
+  console.log(bookList)
+
   return (
     <>
       <div className='innerPageBx'>

@@ -45,13 +45,13 @@ const Header = () => {
                                 {/* user links */}
                                 <ul className="list-unstyled user-links fw-bold font-lato">
                                     <li>
-                                        <a href="javascript:void(0)">
+                                        <Link to="/login">
                                             Login
-                                        </a>{" "}
+                                        </Link>{" "}
                                         <span className="sep">|</span>{" "}
-                                        <a href="javascript:void(0)">
+                                        <Link to="/signup">
                                             Register
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
@@ -131,20 +131,20 @@ const Header = () => {
                                                 <Link to="/">Books & Notes</Link>
                                             </li>
                                             <li className="dropdown">
-                                            <a href="javscript:void(0)" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                            <ul className="dropdown-menu">
-                                                <li><Link to="/about-us">About us</Link></li>
-                                                <li><Link to="/login">Login</Link></li>
-                                                <li><Link to="/signup">Signup</Link></li>
-                                                <li><Link to="/book-list">Book List</Link></li>
-                                                <li><Link to="/book-details">Book Details</Link></li>
-                                                <li><Link to="/course-list">Course List</Link></li>
-                                                <li><Link to="/course-deatils">Course Deatils</Link></li>
-                                                 <li><Link to="/cart-page">cart-page</Link></li>
-                                                <li><Link to="/checkout-page">checkout-page</Link></li>
-                                                <li><Link to="/my-account">my-account</Link></li>
-                                                <li><Link to="/wishlist-page">wishlist-page</Link></li>
-                                            </ul>
+                                                <a href="javscript:void(0)" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                                <ul className="dropdown-menu">
+                                                    <li><Link to="/about-us">About us</Link></li>
+                                                    <li><Link to="/login">Login</Link></li>
+                                                    <li><Link to="/signup">Signup</Link></li>
+                                                    <li><Link to="/book-list">Book List</Link></li>
+                                                    <li><Link to="/book-details">Book Details</Link></li>
+                                                    <li><Link to="/course-list">Course List</Link></li>
+                                                    <li><Link to="/course-deatils">Course Deatils</Link></li>
+                                                    <li><Link to="/cart-page">cart-page</Link></li>
+                                                    <li><Link to="/checkout-page">checkout-page</Link></li>
+                                                    <li><Link to="/my-account">my-account</Link></li>
+                                                    <li><Link to="/wishlist-page">wishlist-page</Link></li>
+                                                </ul>
                                             </li>
                                             <li>
                                                 <Link to="/">Mock Tests</Link>

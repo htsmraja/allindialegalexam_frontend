@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -9,7 +9,16 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { useCommonContext } from '../../../context/commonContext';
 const Courses = () => {
+    const { getCourseList, courseList } = useCommonContext();
+    const filters = { page: 1 };
+    const key = JSON.stringify(filters);
+    useEffect(() => {
+        getCourseList(filters);
+    }, [])
+    const courses = courseList?.data?.[key]?.products || [];
+    console.log(courses, "course")
     return (
         <>
             <section className="popular-posts-block container coursesPart">

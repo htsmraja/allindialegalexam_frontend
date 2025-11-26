@@ -1,81 +1,79 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { useCommonContext } from '../../../context/commonContext';
 const Banner = () => {
-
+    const { getBannerList, bannerData } = useCommonContext();
+    useEffect(() => {
+        getBannerList();
+    }, [])
+    // console.log(bannerData, "bannerData")
     return (
         <>
             {/* banner section start */}
             <section className="intro-block">
                 {/* slider part start */}
-                <Swiper
-                    navigation={true}
-                    pagination={{
-                        clickable: false,
-                    }}
-                    modules={[Autoplay, EffectFade, Navigation, Pagination]}
-                    loop={true}
-                    effect={'fade'}
-                    autoplay={{
-                        delay: 2500,
-                        disableOnInteraction: false,
-                    }}
-                    className="mainBanner"
-                >
-                    {/* item start */}
-                    <SwiperSlide>
-                        <div className="">
-                            <article className="intro-block-slide overlay bg-cover" style={{ backgroundImage: "url(./assets/images/banner-1.jpg)" }}>
-                                <div className="align-wrap container">
-                                    <div className="align">
-                                        <div className="">
-                                            <h1 className="intro-block-heading">Discover the Power of Law Education</h1>
-                                        </div>
-                                        <div className="delay1">
-                                            <p>Explore comprehensive legal curricula crafted for today’s dynamic legal environment.</p>
-                                        </div>
-                                        <div className="delay2">
-                                            <div className="btns-wrap">
-                                                <a href="/" className="btn btn-warning btn-theme text-uppercase">Our Courses</a>
-                                                <a href="/" className="btn btn-white text-uppercase">Contact us</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </SwiperSlide>
-                    {/* item end */}
+                {
+                    bannerData.loading ? (
+                        <div>Loading...</div>
+                    ) : (
+                        bannerData.data.length > 0 ? (
+                            <Swiper
+                                navigation={true}
+                                pagination={{
+                                    clickable: false,
+                                }}
+                                modules={[Autoplay, EffectFade, Navigation, Pagination]}
+                                loop={true}
+                                effect={'fade'}
+                                autoplay={{
+                                    delay: 2500,
+                                    disableOnInteraction: false,
+                                }}
+                                className="mainBanner"
+                            >
+                                {
+                                    bannerData.data
+                                        ?.filter((bannerItem) => bannerItem.banner_type === "main_banner")
+                                        .map((item, index) => (
+                                            <SwiperSlide>
+                                                <div className="">
+                                                    <article className="intro-block-slide overlay bg-cover" style={{
+                                                        backgroundImage: `url(${import.meta.env.VITE_APP_URL}/uploads/banner/${item.image})`
+                                                    }}
+                                                    >
+                                                        <div className="align-wrap container">
+                                                            <div className="align">
+                                                                <div className="">
+                                                                    <h1 className="intro-block-heading">Discover the Power of Law Education</h1>
+                                                                </div>
+                                                                <div className="delay1">
+                                                                    <p>Explore comprehensive legal curricula crafted for today’s dynamic legal environment.</p>
+                                                                </div>
+                                                                <div className="delay2">
+                                                                    <div className="btns-wrap">
+                                                                        <a href="/" className="btn btn-warning btn-theme text-uppercase">Our Courses</a>
+                                                                        <a href="/" className="btn btn-white text-uppercase">Contact us</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </SwiperSlide>
+                                        ))
+                                }
+                            </Swiper>
+                        ) : (
+                            <div>& nbsp;</div>
+                        )
+                    )
+                }
 
-                    {/* item start */}
-                    <SwiperSlide>
-                        <div className="">
-                            <article className="intro-block-slide overlay bg-cover" style={{ backgroundImage: "url(./assets/images/banner-2.jpg)" }}>
-                                <div className="align-wrap container">
-                                    <div className="align">
-                                        <div className="">
-                                            <h1 className="intro-block-heading">Education &amp; Training Organization</h1>
-                                        </div>
-                                        <div className="delay1">
-                                            <p>We offer the most complete course pakage in the country, for the research, design and development of Education.</p>
-                                        </div>
-                                        <div className="delay2">
-                                            <div className="btns-wrap">
-                                                <a href="/" className="btn btn-warning btn-theme text-uppercase">Our Courses</a>
-                                                <a href="/" className="btn btn-white text-uppercase">Contact us</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </SwiperSlide>
-                    {/* item end */}
-                </Swiper>
                 {/* slider part end */}
 
                 {/* banner info part start */}
@@ -135,7 +133,7 @@ const Banner = () => {
                     </aside>
                 </div>
                 {/* banner info part end */}
-            </section>
+            </section >
             {/* banner section end */}
         </>
     )

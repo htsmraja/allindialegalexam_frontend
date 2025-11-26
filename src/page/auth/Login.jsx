@@ -1,67 +1,155 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CommonLayout from '../../components/common_for_website/CommonLayout'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../../context/authcontext';
 
 const Login = () => {
+    const [mobile, setMobile] = useState("");
+    const [otp, setOtp] = useState("");
+    const [showOtp, setShowOtp] = useState(false);
+    const [timer, setTimer] = useState(0);
+
+    const {
+        login,
+        sendOtp,
+        verifyOtp,
+        loading,
+        message
+    } = useAuthContext();
+
+    const navigate = useNavigate();
+
+    // Countdown timer
+    useEffect(() => {
+        let interval;
+        if (timer > 0) {
+            interval = setInterval(() => setTimer(prev => prev - 1), 1000);
+        }
+        return () => clearInterval(interval);
+    }, [timer]);
+
+    const handleSendOtp = async () => {
+        if (!mobile) return alert("Please enter mobile number");
+
+        try {
+            const success = await sendOtp(mobile);  // ← wait for context API call
+            if (success) {
+                setShowOtp(true); // only show OTP if API succeeds
+                setTimer(30);     // start timer
+            }
+        } catch (err) {
+            console.log("Send OTP failed:", err);
+        }
+    };
+
+
+    const handleVerifyOtp = async () => {
+        if (!otp) return alert("Please enter OTP");
+
+        try {
+            const data = await verifyOtp({ mobile, otp });
+            login(data.token);
+            navigate("/");
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleResendOtp = () => {
+        if (timer === 0) {
+            handleSendOtp();
+        }
+    };
+
+    const handleLoginClick = (e) => {
+        e.preventDefault();
+
+        if (!showOtp) {
+            handleSendOtp();
+        } else {
+            handleVerifyOtp();
+        }
+    };
+
     return (
-        <>
-            <div className='innerPageBx'>
-                <CommonLayout>
-                    {/* login page body start */}
-                    <section className="container user-log-block">
-                        <div className="row">
-                            <div className="col-xs-12 col-md-6 col-md-offset-3">
-                                {/* user log form */}
-                                <form className="user-log-form">
-                                    <h2>Login Form</h2>
+        <div className='innerPageBx'>
+            <CommonLayout>
+
+                <section className="container user-log-block">
+                    <div className="row">
+                        <div className="col-xs-12 col-md-6 col-md-offset-3">
+
+                            <form className="user-log-form" onSubmit={(e) => e.preventDefault()}>
+                                <h2>Login Form</h2>
+
+                                {/* MOBILE INPUT */}
+                                <div className="form-group">
+                                    <input
+                                        type="text"
+                                        className="form-control element-block"
+                                        placeholder="Enter mobile number"
+                                        value={mobile}
+                                        onChange={(e) => setMobile(e.target.value)}
+                                        disabled={showOtp}
+                                    />
+                                </div>
+
+                                {/* OTP INPUT */}
+                                {showOtp && (
                                     <div className="form-group">
                                         <input
                                             type="text"
                                             className="form-control element-block"
-                                            placeholder="Username or email address *"
+                                            placeholder="Enter OTP"
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value)}
                                         />
                                     </div>
-                                    <div className="form-group">
-                                        <input
-                                            type="password"
-                                            className="form-control element-block"
-                                            placeholder="Password *"
-                                        />
+                                )}
+
+                                {/* BUTTONS */}
+                                <div className="btns-wrap">
+                                    <div className="wrap">
+                                        <button
+                                            type="button"
+                                            className="btn btn-theme btn-warning fw-bold font-lato text-uppercase"
+                                            onClick={handleLoginClick}
+                                        >
+                                            {showOtp ? "Verify OTP" : "Send OTP"}
+                                        </button>
                                     </div>
-                                    <div className="btns-wrap">
-                                        <div className="wrap">
-                                            <label
-                                                htmlFor="rem2"
-                                                className="custom-check-wrap fw-normal font-lato"
+
+                                    <div className="wrap text-right">
+                                        <p>
+                                            <span
+                                                className="forget-link"
+                                                style={{
+                                                    cursor: timer === 0 ? "pointer" : "not-allowed",
+                                                    color: timer === 0 ? "#007bff" : "gray"
+                                                }}
+                                                onClick={handleResendOtp}
                                             >
-                                                <input type="checkbox" id="rem2" className="customFormReset" />
-                                            </label>
-                                            <button
-                                                type="submit"
-                                                className="btn btn-theme btn-warning fw-bold font-lato text-uppercase"
-                                            >
-                                                Login
-                                            </button>
-                                        </div>
-                                        <div className="wrap text-right">
-                                            <p>
-                                                <a href="#" className="forget-link">
-                                                    Lost your Password?
-                                                </a>
-                                            </p>
-                                        </div>
+                                                {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
+                                            </span>
+                                        </p>
                                     </div>
-                                </form>
-                                <p>Don’t have an account? <Link className='themeColor' to="/signup"><u>Create an Account</u></Link> </p>
-                            </div>
+                                </div>
+                            </form>
+
+                            <p>
+                                Don’t have an account?
+                                <Link className='themeColor' to="/signup">
+                                    <u>Create an Account</u>
+                                </Link>
+                            </p>
+
                         </div>
-                    </section>
-                    {/* login page body end */}
-                </CommonLayout>
-            </div>
-        </>
+                    </div>
+                </section>
+
+            </CommonLayout>
+        </div>
     )
 }
 
-export default Login
+export default Login;
