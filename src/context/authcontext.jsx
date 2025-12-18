@@ -19,15 +19,7 @@ const AuthProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const location = useLocation();
 
-    useEffect(() => {
-        if (token) {
-            setToken(token);
-            setIsLogin(true);
-        } else {
-            setIsLogin(false);
-            setToken("")
-        }
-    }, []);
+
 
     const register = async (payload) => {
         try {
@@ -45,28 +37,7 @@ const AuthProvider = ({ children }) => {
     }
 
     // Send OTP
-    const sendOtp1 = async (mobile) => {
-        setLoading(true);
-        setMessage("");
-        try {
-            const response = await axios.post(`api/user/login`, { mobile });
 
-            if (response.status === 200 && response.data.status === 200) {
-                setIsRegistered(response?.data?.isAlreadyRegistered);
-                setMessage(response.data.message || "OTP sent successfully");
-                toast(response.data.message)
-            } else {
-                throw new Error(response.data?.message || "Failed to send OTP");
-            }
-        } catch (error) {
-            const errorMessage =
-                error.response?.data?.message || "Failed to send OTP. Please try again.";
-            setMessage(errorMessage);
-            throw error;
-        } finally {
-            setLoading(false);
-        }
-    };
     const sendOtp = async (mobile) => {
         setLoading(true);
         setMessage("");
@@ -96,7 +67,6 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-
     // Verify OTP
     const verifyOtp = async ({ mobile, otp }) => {
         let redirectPath = new URLSearchParams(location.search).get("redirect");
@@ -116,15 +86,14 @@ const AuthProvider = ({ children }) => {
                 { mobile, otp },
                 { headers: { "device-id": device_id } }
             );
-
             if (response.status === 200 && response.data.success) {
                 const token = response.data?.token;
-
                 if (token) {
                     localStorage.setItem("token", token);
                     setToken(token);
                     setIsLogin(true);
                 }
+                login(token)
                 toast(response.data.message)
                 setMessage(" Verified successfully!");
                 setLoading(false);
@@ -179,10 +148,11 @@ const AuthProvider = ({ children }) => {
                 setuserData(response?.data?.data);
             }
         } catch (error) {
-            localStorage.removeItem("token");
-            setIsLogin(false);
-            setToken("");
-            setuserData({});
+            // localStorage.removeItem("token");
+            // setIsLogin(false);
+            // setToken("");
+            // setuserData({});
+            console.log(error)
         }
     };
     const updateUserProfile = async (payload) => {

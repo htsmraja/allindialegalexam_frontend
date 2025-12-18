@@ -11,7 +11,7 @@ const Banner = () => {
     useEffect(() => {
         getBannerList();
     }, [])
-    // console.log(bannerData, "bannerData")
+
     return (
         <>
             {/* banner section start */}
@@ -43,7 +43,7 @@ const Banner = () => {
                                             <SwiperSlide>
                                                 <div className="">
                                                     <article className="intro-block-slide overlay bg-cover" style={{
-                                                        backgroundImage: `url(${import.meta.env.VITE_APP_URL}/uploads/banner/${item.image})`
+                                                        backgroundImage: `url("${import.meta.env.VITE_APP_URL}/uploads/banner/${item.image}")`
                                                     }}
                                                     >
                                                         <div className="align-wrap container">

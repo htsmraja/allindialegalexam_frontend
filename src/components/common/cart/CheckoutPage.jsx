@@ -1,415 +1,246 @@
-import React from 'react'
-import CommonLayout from '../../common_for_website/CommonLayout'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useCommonContext } from "../../../context/commonContext";
+import { useAuthContext } from "../../../context/authcontext";
+import AddressManager from "../../../page/auth/AddressManager";
+import CommonLayout from "../../common_for_website/CommonLayout";
 
-const CheckoutPage = () => {
+const Checkout = () => {
+  const { getCartList, cartlistData, userPlaceOrder } = useCommonContext();
+  const { getUserAddressList, addressList } = useAuthContext();
+  const location = useLocation();
+  const buyNow = location.state?.buyNow || null;
+
+  const [selectedShippingAddressId, setSelectedShippingAddressId] = useState("");
+  const [selectedBillingAddressId, setSelectedBillingAddressId] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [shippingMethod, setShippingMethod] = useState("Delivery");
+  const [accepted, setAccepted] = useState(false);
+
+  useEffect(() => {
+    getUserAddressList();
+    if (!buyNow) getCartList();
+  }, []);
+
+  const cartItems = buyNow ? [buyNow] : cartlistData?.data?.items || [];
+
+  // -----------------------------
+  // PRICE LOGIC
+  // -----------------------------
+  const getPrice = (item) => {
+    // -------------------- FREE ITEMS --------------------
+    if (item.product_type === "book" && item.book_is_free === 1) return 0;
+    if (item.product_type === "course" && item.course_is_free === 1) return 0;
+    if (item.product_type === "mock_test" && item.mock_test_is_free === 0) return 0;
+
+    // -------------------- BOOK PRICES --------------------
+    if (item.product_type === "book") {
+      if (item.book_type === "hardcopy") {
+        return (
+          item.hardcopy_offer_price_b2c ||
+          item.hardcopy_sale_price_b2c ||
+          item.hardcopy_price_b2c
+        );
+      }
+      if (item.book_type === "softcopy") {
+        return (
+          item.softcopy_offer_price_b2c ||
+          item.softcopy_sale_price_b2c ||
+          item.softcopy_price_b2c
+        );
+      }
+    }
+
+    // -------------------- COURSE PRICES --------------------
+    if (item.product_type === "course") {
+      return (
+        item.course_offer_price ||
+        item.course_sale_price ||
+        item.course_price
+      );
+    }
+
+    // -------------------- MOCK TEST PRICES --------------------
+    if (item.product_type === "mock_test") {
+      return (
+        item.mock_offer_price ||
+        item.mock_sale_price ||
+        item.mock_price
+      );
+    }
+
+    return 0;
+  };
+
+  const grandTotal = cartItems.reduce((sum, item) => sum + getPrice(item) * item.quantity, 0);
+
+  // -----------------------------
+  // PLACE ORDER
+  // -----------------------------
+  const handlePlaceOrder = async () => {
+    if (!selectedBillingAddressId || !selectedShippingAddressId)
+      return alert("Please select billing and shipping address");
+
+    if (!paymentMethod) return alert("Select payment method");
+    if (!accepted) return alert("Accept Terms & Conditions");
+
+    const payload = {
+      billing_address_id: selectedBillingAddressId,
+      shipping_address_id: selectedShippingAddressId,
+      shipping_method: shippingMethod,
+      payment_method: paymentMethod,
+    };
+
+    await userPlaceOrder(payload);
+  };
+
+  const hasBookOrPhysical = cartItems.some(
+    (item) => item.product_type === "book" && item.book_type === "hardcopy"
+  );
+
   return (
-    <>
-      <div className='innerPageBx'>
-        <CommonLayout>
+    <CommonLayout>
+      <div className="innerPageBx">
+        {/* Breadcrumb */}
+        <nav className="breadcrumb-nav">
+          <div className="container">
+            <ol className="breadcrumb">
+              <li><Link to="/">Home</Link></li>
+              <li className="active">Checkout</li>
+            </ol>
+          </div>
+        </nav>
 
-          {/* page header start */}
-          <nav className="breadcrumb-nav">
-            <div className="container">
-              <ol className="breadcrumb">
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li className="active">Checkout Page</li>
-              </ol>
-            </div>
-          </nav>
-          {/* page header end */}
+        <div className="container checkout-page">
+          <div className="row">
 
-          {/* page body part start */}
-          <section className="container checkout-block" style={{paddingTop:'50px'}}>
-            {/* checkout form */}
-            <form action="#" className="checkout-form">
-              <div className="row">
-                <div className="col-xs-12 col-md-6">
-                  <h2>Billing Details</h2>
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            First Name <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            Last Name <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">Company Name</span>
-                      <input type="text" className="element-block form-control" />
-                    </label>
-                  </div>
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            Email Address <span className="required">*</span>
-                          </span>
-                          <input type="email" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            Phone <span className="required">*</span>
-                          </span>
-                          <input type="tel" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">
-                        Country <span className="required">*</span>
-                      </span>
-                      <select
-                        data-placeholder="Country"
-                        className="form-control"
-                      >
-                        <option value={0}>England</option>
-                        <option value={0}>England</option>
-                        <option value={0}>England</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">
-                        Address <span className="required">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        className="element-block form-control"
-                        placeholder="Street address"
-                      />
-                      <input
-                        type="text"
-                        className="element-block form-control"
-                        placeholder="Apartment, suite, unit etc. (optional)"
-                      />
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">
-                        Town / City <span className="required">*</span>
-                      </span>
-                      <input type="text" className="element-block form-control" />
-                    </label>
-                  </div>
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            State / Country <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            Postcode / ZIP <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="sm" className="custom-check-wrap fw-normal font-lato">
-                      <input type="checkbox" id="sm" className="customFormReset" />
-                      <span className="fake-label element-block">
-                        Ship to a different?
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <div className="col-xs-12 col-md-6">
-                  <label
-                    htmlFor="sd"
-                    className="custom-check-wrap font-lato title-check element-block"
-                  >
-                    <input type="checkbox" id="sd" className="customFormReset" />
-                    <span className="fake-label element-block">
-                      Ship to a different address?
-                    </span>
-                  </label>
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            First Name <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            Last Name <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">Company Name</span>
-                      <input type="text" className="element-block form-control" />
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">
-                        Country <span className="required">*</span>
-                      </span>
-                      <select
-                        data-placeholder="Country"
-                        className="form-control"
-                      >
-                        <option value={0}>England</option>
-                        <option value={0}>England</option>
-                        <option value={0}>England</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">
-                        Address <span className="required">*</span>
-                      </span>
-                      <input
-                        type="text"
-                        className="element-block form-control"
-                        placeholder="Street address"
-                      />
-                      <input
-                        type="text"
-                        className="element-block form-control"
-                        placeholder="Apartment, suite, unit etc. (optional)"
-                      />
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">
-                        Town / City <span className="required">*</span>
-                      </span>
-                      <input type="text" className="element-block form-control" />
-                    </label>
-                  </div>
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            State / Country <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label className="element-block fw-normal font-lato">
-                          <span className="element-block">
-                            Postcode / ZIP <span className="required">*</span>
-                          </span>
-                          <input type="text" className="element-block form-control" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="element-block fw-normal font-lato">
-                      <span className="element-block">Town / City</span>
-                      <textarea
-                        className="form-control element-block"
-                        defaultValue={""}
-                      />
-                    </label>
-                  </div>
-                </div>
+            {/* LEFT SIDE — Address & Payment */}
+            <div className="col-md-7">
+              <h3 className="mb-3">Billing & Shipping</h3>
+
+              <AddressManager
+                addressList={addressList}
+                onSelectShipping={setSelectedShippingAddressId}
+                onSelectBilling={setSelectedBillingAddressId}
+              />
+
+              <hr />
+
+              <h4 className="mb-2 mt-4">Shipping Method</h4>
+              {["Delivery", "Self Pickup"].map((m) => (
+                <label key={m} className="d-block">
+                  <input
+                    type="radio"
+                    name="shippingMethod"
+                    value={m}
+                    checked={shippingMethod === m}
+                    onChange={(e) => setShippingMethod(e.target.value)}
+                  />{" "}
+                  {m}
+                </label>
+              ))}
+
+              <hr />
+              <h4 className="mb-2 mt-4">Payment Method</h4>
+              {!hasBookOrPhysical && (
+                <label className="d-block">
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="COD"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  Cash on Delivery
+                </label>
+              )}
+              <label className="d-block mt-1">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="ONLINE"
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Online Payment
+              </label>
+
+              <hr />
+              <div className="mt-3">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={accepted}
+                    onChange={(e) => setAccepted(e.target.checked)}
+                  />{" "}
+                  I accept the{" "}
+                  <Link to="/terms-and-conditions" target="_blank">
+                    Terms & Conditions
+                  </Link>
+                </label>
               </div>
-              <h2>Your Order</h2>
-              <div className="table-wrap">
-                {/* order data table */}
-                <table className="table order-data-table">
+            </div>
+
+            {/* RIGHT SIDE — Order Summary */}
+            <div className="col-md-5">
+              <div className="order-summary-card p-3 shadow-sm">
+                <h3 className="mb-3">Order Summary</h3>
+
+                <table className="table">
                   <thead>
                     <tr>
                       <th>Product</th>
-                      <th>Total</th>
+                      <th className="text-end">Total</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Wirebound Notebook x 2</td>
-                      <td>
-                        <strong className="price">$138.00</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Compact Stabler x 1</td>
-                      <td>
-                        <strong className="price">$19.00</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Wooden Pencil Yellow x 1</td>
-                      <td>
-                        <strong className="price">$22.00</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span className="text-dark">Subtotal</span>
-                      </td>
-                      <td>
-                        <strong className="price">$105.00</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span className="text-dark">Shipping</span>
-                      </td>
-                      <td>
-                        {/* radio list */}
-                        <ul className="list-unstyled radio-list">
-                          <li>
-                            <input
-                              type="radio"
-                              className="customFormReset"
-                              id="raddf01"
-                              name="kknjb"
-                              defaultChecked=""
-                            />
-                            <label
-                              htmlFor="raddf01"
-                              className="custom-radio-wrap fw-normal"
-                            >
-                              Free Shipping
-                            </label>
-                          </li>
-                          <li>
-                            <input
-                              type="radio"
-                              className="customFormReset"
-                              id="rad0asd1"
-                              name="kknjb"
-                              defaultChecked=""
-                            />
-                            <label
-                              htmlFor="rad0asd1"
-                              className="custom-radio-wrap fw-normal"
-                            >
-                              Flat Rate: £10.00
-                            </label>
-                          </li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span className="text-dark">Total</span>
-                      </td>
-                      <td>
-                        <strong className="price">$105.00</strong>
-                      </td>
-                    </tr>
+                    {cartItems.map((item, i) => {
+                      const total = getPrice(item) * item.quantity;
+                      return (
+                        <tr key={i}>
+                          <td>
+                            {item.product_type === "course"
+                              ? item.course_title
+                              : item.product_type === "mock_test"
+                                ? item.mock_title
+                                : item.book_title}
+                            <br />
+                            <small className="text-muted">
+                              {item.product_type === "course"
+                                ? `Batch: ${item.batch_name}`
+                                : item.product_type === "mock_test"
+                                  ? ""
+                                  : `Type: ${item.book_type}`}
+                            </small>
+                          </td>
+                          <td className="text-end">
+                            {total === 0 ? "FREE" : `₹${total}`}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Grand Total</th>
+                      <th className="text-end">₹{grandTotal}</th>
+                    </tr>
+                  </tfoot>
                 </table>
-              </div>
-              {/* confirmation box */}
-              <div className="confirmation-box">
-                {/* radio list */}
-                <ul className="list-unstyled radio-list">
-                  <li>
-                    <input
-                      type="radio"
-                      className="customFormReset"
-                      id="rad01"
-                      name="paym"
-                      defaultChecked=""
-                    />
-                    <label htmlFor="rad01" className="custom-radio-wrap fw-normal">
-                      Free Shipping
-                    </label>
-                    <div className="m-descr">
-                      <p>
-                        Make your payment directly into our bank account. Please use your
-                        Order ID as the payment reference. Your order won’t be shipped
-                        until the fun have cleared in our account.
-                      </p>
-                    </div>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      className="customFormReset"
-                      id="rad02"
-                      name="paym"
-                      defaultChecked=""
-                    />
-                    <label htmlFor="rad02" className="custom-radio-wrap fw-normal">
-                      PayPal{" "}
-                    </label>
-                    <img
-                      src="./assets/images/payment-method.png"
-                      alt="payment-method"
-                      className="hidden-xs"
-                    />
-                    <strong className="text-q font-lato fw-normal">
-                      <Link>What is PayPal?</Link>
-                    </strong>
-                  </li>
-                </ul>
-                <hr className="sep" />
-                <div className="text-right">
-                  <button
-                    type="submit"
-                    className="btn btn-warning btn-theme font-lato fw-bold text-uppercase"
-                  >
-                    Place Order
-                  </button>
-                </div>
-              </div>
-            </form>
-          </section>
-          {/* page body part end */}
 
-        </CommonLayout>
+                <button
+                  className="btn btn-warning btn-block w-100 mt-3"
+                  onClick={handlePlaceOrder}
+                >
+                  Place Order
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br />
       </div>
-    </>
-  )
-}
+    </CommonLayout>
+  );
+};
 
-export default CheckoutPage
+export default Checkout;

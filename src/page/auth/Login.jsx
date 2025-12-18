@@ -48,7 +48,7 @@ const Login = () => {
 
         try {
             const data = await verifyOtp({ mobile, otp });
-            login(data.token);
+            // login(data.token);
             navigate("/");
         } catch (err) {
             console.log(err);

@@ -1,7 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuthContext } from '../../context/authcontext'
+import { useCommonContext } from '../../context/commonContext';
 
 const Header = () => {
+    const { isLogin, userData, logout } = useAuthContext();
+    const { setCartListData, cartlistData } = useCommonContext();
+    // console.log(isLogin, "islogin")
+    // console.log(userData, "userData")
+    const handleLogout = () => {
+        logout();
+        setCartListData({
+            data: [],
+            loading: false,
+        });
+    };
+    const items = cartlistData?.data?.items || [];
+    // console.log(cartlistData?.data, "cartlistData?.data")
+    // console.log(items, "items")
     return (
         <>
             {/* header of the page */}
@@ -19,7 +35,7 @@ const Header = () => {
                                                 Call :
                                             </strong>
                                             <strong className="dd element-block hd-phone">
-                                                +(61) 123 456 7890
+                                                +(91) 9748304782
                                             </strong>
                                             <i className="fas fa-phone-square hd-up-phone hidden-sm hidden-md hidden-lg">
                                                 <span className="sr-only">phone</span>
@@ -32,7 +48,7 @@ const Header = () => {
                                                 Email :
                                             </strong>
                                             <strong className="dd element-block hd-phone">
-                                                Example@domain.com
+                                                allindialegalexams@gmail.com
                                             </strong>
                                             <i className="fas fa-envelope-square hd-up-phone hidden-sm hidden-md hidden-lg">
                                                 <span className="sr-only">email</span>
@@ -44,15 +60,26 @@ const Header = () => {
                             <div className="col-xs-3 col justify-end">
                                 {/* user links */}
                                 <ul className="list-unstyled user-links fw-bold font-lato">
-                                    <li>
-                                        <Link to="/login">
-                                            Login
-                                        </Link>{" "}
-                                        <span className="sep">|</span>{" "}
-                                        <Link to="/signup">
-                                            Register
-                                        </Link>
-                                    </li>
+                                    {
+                                        isLogin ? (<li>
+                                            <Link to="/my-account">
+                                                Hi . {userData?.first_name + " " + userData?.last_name}
+                                            </Link>{" "}
+                                            <span className="sep">|</span>{" "}
+                                            <Link to="#" onClick={handleLogout}>
+                                                Logout
+                                            </Link>
+                                        </li>) : (<li>
+                                            <Link to="/login">
+                                                Login
+                                            </Link>{" "}
+                                            <span className="sep">|</span>{" "}
+                                            <Link to="/signup">
+                                                Register
+                                            </Link>
+                                        </li>)
+                                    }
+
                                 </ul>
                             </div>
                         </div>
@@ -107,7 +134,7 @@ const Header = () => {
                                             <li>
                                                 <Link to="/about-us">About Us</Link>
                                             </li>
-                                            <li className="dropdown">
+                                            {/* <li className="dropdown">
                                                 <a
                                                     href="#"
                                                     className="dropdown-toggle"
@@ -122,15 +149,19 @@ const Header = () => {
                                                     <li>
                                                         <a href="javascript:void(0)">Course List</a>
                                                     </li>
-                                                    <li>
-                                                        <a href="javascript:void(0)">Course Single</a>
-                                                    </li>
+
                                                 </ul>
+                                            </li> */}
+                                            <li>
+                                                <Link to="/course-list">Courses</Link>
                                             </li>
                                             <li>
-                                                <Link to="/">Books & Notes</Link>
+                                                <Link to="/book-list">Books & Notes</Link>
                                             </li>
-                                            <li className="dropdown">
+                                            <li>
+                                                <Link to="/cart-page">Cart : {items?.length}</Link>
+                                            </li>
+                                            {/* <li className="dropdown">
                                                 <a href="javscript:void(0)" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
                                                 <ul className="dropdown-menu">
                                                     <li><Link to="/about-us">About us</Link></li>
@@ -145,7 +176,7 @@ const Header = () => {
                                                     <li><Link to="/my-account">my-account</Link></li>
                                                     <li><Link to="/wishlist-page">wishlist-page</Link></li>
                                                 </ul>
-                                            </li>
+                                            </li> */}
                                             <li>
                                                 <Link to="/">Mock Tests</Link>
                                             </li>

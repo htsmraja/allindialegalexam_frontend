@@ -1,8 +1,46 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CommonLayout from '../../components/common_for_website/CommonLayout'
 import { Link } from 'react-router-dom'
+import { useCommonContext } from '../../context/commonContext';
+import CourseCard from './CourseCard';
 
 const CourseList = () => {
+  const { getCourseList, courseList, getHeaderCategoryList, headerCategoryList } = useCommonContext();
+  const filters = { page: 1, limit: 9 };
+  const key = JSON.stringify(filters);
+  useEffect(() => {
+    getCourseList(filters);
+    getHeaderCategoryList();
+  }, [])
+  const courses = courseList?.data?.[key]?.products || [];
+  const isLoading = courseList?.loading;
+
+  const isDateActive = (start, end) => {
+    if (!start || !end) return false;
+    const now = new Date();
+    return now >= new Date(start) && now <= new Date(end);
+  };
+
+  const getPrice = (b) => {
+    // subscription allowed means paid course
+    if (!b.is_subscription_allowed) return "Free";
+
+    const isOfferActive = isDateActive(b.offer_start, b.offer_end);
+
+    // OFFER PRICE
+    if (b.mark_as_offer && b.offer_price && isOfferActive) {
+      return `₹${b.offer_price}`;
+    }
+
+    // SALE PRICE
+    if (b.sale_price) {
+      return `₹${b.sale_price}`;
+    }
+
+    // NORMAL PRICE
+    return `₹${b.price}`;
+  };
+  // console.log(headerCategoryList, "headerCategoryList")
   return (
     <>
       <div className='innerPageBx'>
@@ -37,711 +75,49 @@ const CourseList = () => {
                   </select>
                 </header>
                 <div className="row flex-wrap">
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img02.jpg" alt="image description" />
+                  {isLoading &&
+                    [...Array(6)].map((_, i) => (
+                      <div key={i} className="col-xs-12 col-sm-6 col-lg-4">
+                        <article className="popular-post">
+
+                          {/* Image Skeleton */}
+                          <div className="aligncenter skeleton" style={{ height: 200, marginBottom: 10 }}></div>
+
+                          {/* Price Skeleton */}
+                          <div className="skeleton" style={{ width: "40%", height: 20, marginBottom: 10 }}></div>
+
+                          {/* Title skeleton */}
+                          <div className="skeleton" style={{ width: "80%", height: 20, marginBottom: 8 }}></div>
+                          <div className="skeleton" style={{ width: "60%", height: 20, marginBottom: 15 }}></div>
+
+                          {/* Author skeleton */}
+                          <div className="d-flex align-items-center">
+                            <div className="skeleton" style={{ width: 40, height: 40, borderRadius: "50%" }}></div>
+                            <div className="skeleton" style={{ width: "50%", height: 15, marginLeft: 10 }}></div>
+                          </div>
+
+                          {/* Footer skeleton */}
+                          <div className="d-flex justify-content-between mt-3">
+                            <div className="skeleton" style={{ width: "30%", height: 15 }}></div>
+                            <div className="skeleton" style={{ width: "30%", height: 15 }}></div>
+                            <div className="skeleton" style={{ width: "30%", height: 15 }}></div>
+                          </div>
+
+                        </article>
                       </div>
-                      <div>
-                        <strong className="bg-primary text-white font-lato text-uppercase price-tag">
-                          $99.00
-                        </strong>
+                    ))
+                  }
+
+                  {!isLoading &&
+                    courses.length > 0 &&
+                    courses.map((b, index) => (
+                      <div className="col-xs-12 col-sm-6 col-lg-4">
+                        {/* popular post */}
+                        <CourseCard b={b} />
                       </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">
-                          French for Beginners to Advanced Training
-                        </a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft rounded-circle no-shrink">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img06.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Keny White</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">98</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">10</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img03.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-success text-white font-lato text-uppercase price-tag">
-                          Free
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">
-                          Introduction to Mobile Apps Development
-                        </a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img07.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Sarah Johnson</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">200</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">3</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="far fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img04.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-primary text-white font-lato text-uppercase price-tag">
-                          $85.60
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">How to Become a Startup Founder</a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img08.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Jhon Milton</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">200</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">3</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="far fa-star-half">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img05.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-success text-white font-lato text-uppercase price-tag">
-                          free
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">
-                          Your Complete Guide to Self Devlopement
-                        </a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img08.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Sarah Johnson</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">48</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">5</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img02.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-primary text-white font-lato text-uppercase price-tag">
-                          $68.00
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">
-                          Adobe InDesign CS6 Tutorial Beginners
-                        </a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img09.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Ans Niversity</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">48</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">5</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img03.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-primary text-white font-lato text-uppercase price-tag">
-                          $75.00
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">Swift Programming for Beginners</a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img06.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Don Cooper</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">48</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">5</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img04.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-primary text-white font-lato text-uppercase price-tag">
-                          $89.00
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">Become a Professional Film Maker</a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img07.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Don Cooper</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">48</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">5</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img05.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-primary text-white font-lato text-uppercase price-tag">
-                          $55.00
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">
-                          Branding like a professional in 10 days
-                        </a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img08.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Logancee Wok</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">48</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">5</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    {/* popular post */}
-                    <article className="popular-post">
-                      <div className="aligncenter">
-                        <img src="./assets/images/img03.jpg" alt="image description" />
-                      </div>
-                      <div>
-                        <strong className="bg-success text-white font-lato text-uppercase price-tag">
-                          free
-                        </strong>
-                      </div>
-                      <h3 className="post-heading">
-                        <a href="javascript:void(0)">
-                          Anatomy for Figure Drawing Mastering Figure
-                        </a>
-                      </h3>
-                      <div className="post-author">
-                        <div className="alignleft no-shrink rounded-circle">
-                          <a href="javascript:void(0)">
-                            <img
-                              src="./assets/images/img06.jpg"
-                              className="rounded-circle"
-                              alt="image description"
-                            />
-                          </a>
-                        </div>
-                        <h4 className="author-heading">
-                          <a href="javascript:void(0)">Keny White</a>
-                        </h4>
-                      </div>
-                      <footer className="post-foot gutter-reset">
-                        <ul className="list-unstyled post-statuses-list">
-                          <li>
-                            <a href="#">
-                              <span className="fas icn fa-users no-shrink">
-                                <span className="sr-only">users</span>
-                              </span>
-                              <strong className="text fw-normal">48</strong>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span className="fas icn no-shrink fa-comments">
-                                <span className="sr-only">comments</span>
-                              </span>
-                              <strong className="text fw-normal">5</strong>
-                            </a>
-                          </li>
-                        </ul>
-                        <ul className="star-rating list-unstyled">
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className="fas fa-star">
-                              <span className="sr-only">star</span>
-                            </span>
-                          </li>
-                        </ul>
-                      </footer>
-                    </article>
-                  </div>
+                    ))}
+
+
                 </div>
                 <nav aria-label="Page navigation">
                   {/* pagination */}
@@ -786,7 +162,17 @@ const CourseList = () => {
                 <section className="widget widget_categories">
                   <h3>Course Categories</h3>
                   <ul className="list-unstyled text-capitalize font-lato">
-                    <li className="cat-item cat-item-1">
+                    {
+                      headerCategoryList?.data?.length > 0 && (
+                        headerCategoryList?.data?.map((cat) => (
+                          <li className="cat-item cat-item-1" key={cat.category_id}>
+                            <a href="#">{cat.category_title}</a>
+                          </li>
+                        ))
+
+                      )
+                    }
+                    {/* <li className="cat-item cat-item-1">
                       <a href="#">Business</a>
                     </li>
                     <li className="cat-item active cat-item-2">
@@ -806,7 +192,7 @@ const CourseList = () => {
                     </li>
                     <li className="cat-item cat-item-7">
                       <a href="#">IT &amp; Software</a>
-                    </li>
+                    </li> */}
                   </ul>
                 </section>
                 {/* widget intro */}

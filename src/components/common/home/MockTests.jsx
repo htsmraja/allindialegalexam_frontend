@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // Import Swiper styles
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -8,7 +8,15 @@ import 'swiper/css/pagination';
 
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Link } from 'react-router-dom';
+import { useCommonContext } from '../../../context/commonContext';
+import MockTestCard from '../../../page/mocktest/MockTestCard';
 const MockTests = () => {
+    const { getMockTestList, mockTestList } = useCommonContext();
+    useEffect(() => {
+        getMockTestList({});
+    }, [])
+    const mockTests = mockTestList?.data || [];
+    const isLoading = mockTestList?.loading;
     return (
         <>
             <section className="upcoming-events-block container" style={{ paddingTop: '50px', paddingBottom: '73px' }}>
@@ -16,7 +24,10 @@ const MockTests = () => {
                     <div className="pull-left">
                         <h2 className="block-header-heading">Mock Tests</h2>
                         <p>Recent and upcoming educational events listed here</p>
-                    </div><a href="javascript:void(0)" className="btn btn-default text-uppercase pull-right">View More</a>
+                    </div>
+                    <Link to="/mock-test-list" className="btn btn-default text-uppercase pull-right">
+                        View More
+                    </Link>
                 </header>
                 {/* product showcase start */}
                 <div>
@@ -49,126 +60,24 @@ const MockTests = () => {
                         modules={[Autoplay, Navigation, Pagination]}
                         className="mockTests"
                     >
-                        {/* item start */}
-                        <SwiperSlide>
-                            <article className="news-post">
-                                <div className="aligncenter">
-                                    <a href="javascript:void(0)">
-                                        <img src="./assets/images/mock-tests-1.jpg" alt="image desciption" />
-                                    </a>
-                                </div>
-                                <h3 style={{ marginBottom: '7px' }}><a href="javascript:void(0)">Practise session of AOA 2026</a></h3>
-                                <p style={{ margin: '3px' }}><i className="far fa-calendar-alt"></i> 30 Questions / <i className="far fa-clock"></i> 30 minutes</p>
-                                <div className='timerBx'>
-                                    <span>2 Days</span>
-                                    <span>12 Hours</span>
-                                    <span>20 Min</span>
-                                    <span>45 Sec</span>
-                                </div>
-                                <h4 style={{ margin: '5px 0 0 0' }} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
-                            </article>
-                        </SwiperSlide>
-                        {/* item end */}
-                        {/* item start */}
-                        <SwiperSlide>
-                            <article className="news-post">
-                                <div className="aligncenter">
-                                    <a href="javascript:void(0)">
-                                        <img src="./assets/images/mock-tests-2.jpg" alt="image desciption" />
-                                    </a>
-                                </div>
-                                <h3 style={{ marginBottom: '7px' }}><a href="javascript:void(0)">Practise session of AOA 2026</a></h3>
-                                <p style={{ margin: '3px' }}><i class="far fa-calendar-alt"></i> 30 Questions / <i className="far fa-clock"></i> 30 minutes</p>
-                                <div className='timerBx'>
-                                    <span>2 Days</span>
-                                    <span>12 Hours</span>
-                                    <span>20 Min</span>
-                                    <span>45 Sec</span>
-                                </div>
-                                <h4 style={{ margin: '5px 0 0 0' }} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
-                            </article>
-                        </SwiperSlide>
-                        {/* item end */}
-                        {/* item start */}
-                        <SwiperSlide>
-                            <article className="news-post">
-                                <div className="aligncenter">
-                                    <a href="javascript:void(0)">
-                                        <img src="./assets/images/mock-tests-3.jpg" alt="image desciption" />
-                                    </a>
-                                </div>
-                                <h3 style={{ marginBottom: '7px' }}><a href="javascript:void(0)">Practise session of AOA 2026</a></h3>
-                                <p style={{ margin: '3px' }}><i class="far fa-calendar-alt"></i> 30 Questions / <i class="far fa-clock"></i> 30 minutes</p>
-                                <div className='timerBx'>
-                                    <span>2 Days</span>
-                                    <span>12 Hours</span>
-                                    <span>20 Min</span>
-                                    <span>45 Sec</span>
-                                </div>
-                                <h4 style={{ margin: '5px 0 0 0' }} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
-                            </article>
-                        </SwiperSlide>
-                        {/* item end */}
-                        {/* item start */}
-                        <SwiperSlide>
-                            <article className="news-post">
-                                <div className="aligncenter">
-                                    <a href="javascript:void(0)">
-                                        <img src="./assets/images/mock-tests-1.jpg" alt="image desciption" />
-                                    </a>
-                                </div>
-                                <h3 style={{ marginBottom: '7px' }}><a href="javascript:void(0)">Practise session of AOA 2026</a></h3>
-                                <p style={{ margin: '3px' }}><i class="far fa-calendar-alt"></i> 30 Questions / <i class="far fa-clock"></i> 30 minutes</p>
-                                <div className='timerBx'>
-                                    <span>2 Days</span>
-                                    <span>12 Hours</span>
-                                    <span>20 Min</span>
-                                    <span>45 Sec</span>
-                                </div>
-                                <h4 style={{ margin: '5px 0 0 0' }} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
-                            </article>
-                        </SwiperSlide>
-                        {/* item end */}
-                        {/* item start */}
-                        <SwiperSlide>
-                            <article className="news-post">
-                                <div className="aligncenter">
-                                    <a href="javascript:void(0)">
-                                        <img src="./assets/images/mock-tests-2.jpg" alt="image desciption" />
-                                    </a>
-                                </div>
-                                <h3 style={{ marginBottom: '7px' }}><a href="javascript:void(0)">Practise session of AOA 2026</a></h3>
-                                <p style={{ margin: '3px' }}><i class="far fa-calendar-alt"></i> 30 Questions / <i class="far fa-clock"></i> 30 minutes</p>
-                                <div className='timerBx'>
-                                    <span>2 Days</span>
-                                    <span>12 Hours</span>
-                                    <span>20 Min</span>
-                                    <span>45 Sec</span>
-                                </div>
-                                <h4 style={{ margin: '5px 0 0 0' }} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
-                            </article>
-                        </SwiperSlide>
-                        {/* item end */}
-                        {/* item start */}
-                        <SwiperSlide>
-                            <article className="news-post">
-                                <div className="aligncenter">
-                                    <a href="javascript:void(0)">
-                                        <img src="./assets/images/mock-tests-3.jpg" alt="image desciption" />
-                                    </a>
-                                </div>
-                                <h3 style={{ marginBottom: '7px' }}><a href="javascript:void(0)">Practise session of AOA 2026</a></h3>
-                                <p style={{ margin: '3px' }}><i class="far fa-calendar-alt"></i> 30 Questions / <i class="far fa-clock"></i> 30 minutes</p>
-                                <div className='timerBx'>
-                                    <span>2 Days</span>
-                                    <span>12 Hours</span>
-                                    <span>20 Min</span>
-                                    <span>45 Sec</span>
-                                </div>
-                                <h4 style={{ margin: '5px 0 0 0' }} >₹ 99 <Link className='btn btn-default'>join now</Link></h4>
-                            </article>
-                        </SwiperSlide>
-                        {/* item end */}
+                        {isLoading &&
+                            [...Array(4)].map((_, i) => (
+                                <SwiperSlide key={i}>
+                                    <article className="product-module">
+                                        <div className="aligncenter skeleton-box" style={{ height: 180 }}></div>
+                                        <h3 className="fw-semi skeleton-box" style={{ width: "80%", height: 18 }}></h3>
+                                        <div className="skeleton-box" style={{ width: "60%", height: 15 }}></div>
+                                        <div className="skeleton-box" style={{ width: "40%", height: 15 }}></div>
+                                    </article>
+                                </SwiperSlide>
+                            ))}
+                        {!isLoading &&
+                            mockTests.length > 0 &&
+                            mockTests.map((b, index) => (
+                                <SwiperSlide key={index}>
+                                    <MockTestCard b={b} />
+                                </SwiperSlide>
+                            ))}
                     </Swiper>
                 </div>
                 {/* product showcase end */}
