@@ -7596,6 +7596,8 @@ form .star-rating .customFormReset:checked + label {
   margin: 0 -20px 20px;
   position: relative;
   z-index: 1;
+  height:270px;
+  overflow:hidden;
 }
 
 .popular-post .aligncenter:before {
@@ -7630,6 +7632,8 @@ form .star-rating .customFormReset:checked + label {
   font-size: 17px;
   line-height: 1.29412;
 }
+
+.popular-post .post-heading a{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;display:block;width:100%;}
 
 .popular-post .post-foot {
   color: #777777;
@@ -9298,7 +9302,7 @@ form .star-rating .customFormReset:checked + label {
 
 .content-aligncenter img {
   display: block;
-  width: 100%;
+  max-width: 100%;
   max-width: none;
 }
 
@@ -10975,7 +10979,7 @@ form .star-rating .customFormReset:checked + label {
 
 .product-module .btn {
   vertical-align: top;
-  min-width: 120px;
+  min-width: 50%;
 }
 
 /* ---------------------------------------------------------
@@ -11061,9 +11065,14 @@ form .star-rating .customFormReset:checked + label {
 }
 
 .product-description-column .query-wrap .quantity {
-  width: 80px;
+  max-width: 150px;
   margin-right: 15px;
   text-align: center;
+  display: flex;
+  border: 1px solid #e8e8e8;
+  height: 43px;
+  overflow: hidden;
+  align-items: center;
 }
 
 .product-description-column .btn {
@@ -12595,3 +12604,10 @@ input:checked + .custom-radio-wrap:after {
 .partner-block .partner-list .slick-prev {
   margin-right: 41px;
 }
+
+
+.bookBox{border:1px solid #e8e8e8;}
+.bookBox .img{height:300px; border-bottom:1px solid #e8e8e8;}
+.bookBox .img img{margin:0 auto;max-height:100%;max-width:fit-content;}
+.bookBox h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;}
+.bookBox .product-module .btn{width:50%!important;}

@@ -67,7 +67,7 @@ const BookCard = ({ b }) => {
     };
     // console.log(b, "book")
     return (
-        <article className="product-module" style={{ position: "relative" }}>
+        <article className="product-module bookBox" style={{ position: "relative" }}>
 
             {/* TYPE BADGE */}
             <span
@@ -77,7 +77,7 @@ const BookCard = ({ b }) => {
                 {b.type?.toUpperCase()}
             </span>
 
-            <div className="aligncenter">
+            <div className="aligncenter img">
                 <Link to={`/book-details/${b.slug}`}>
                     <img
                         src={
@@ -89,16 +89,22 @@ const BookCard = ({ b }) => {
                     />
                 </Link>
             </div>
-
+            
+            <div style={{padding:'0px 7px'}}>
             <h3 className="fw-semi">
                 <Link to={`/book-details/${b.slug}`}>{b.title}</Link>
             </h3>
 
             {/* FORMAT BUTTONS */}
+            {/* PRICE */}
+            <strong className="price" style={{paddingLeft:'5px'}}>
+                {b.is_free ? "Free" : `₹ ${finalPrice}`}
+            </strong>
+            </div>
             <div className="gap-2">
                 {hasSoft && (
                     <button
-                        className={`btn btn-sm mb-2 ${format === "soft" ? "btn-primary" : "btn-outline-primary"}`}
+                        className={`btn btn-sm mb-2 ${format === "soft" ? "btn-dark" : "btn-dark"}`}
                         onClick={() => setFormat("soft")}
                     >
                         Soft Copy
@@ -107,40 +113,35 @@ const BookCard = ({ b }) => {
 
                 {hasHard && (
                     <button
-                        className={`btn btn-sm mb-2 ${format === "hard" ? "btn-primary" : "btn-outline-primary"}`}
+                        className={`btn btn-sm mb-2 ${format === "hard" ? "btn-primary" : "btn-warning"}`}
                         onClick={() => setFormat("hard")}
+                        style={{color:'#000'}}
                     >
                         Hard Copy
                     </button>
                 )}
             </div>
-
-            {/* PRICE */}
-            <strong className="price element-block fw-semi">
-                {b.is_free ? "Free" : `₹ ${finalPrice}`}
-
-
-
-            </strong>
             <div>
                 {!b.is_free ? (
                     <div>
                         <button
-                            className="btn btn-success btn-sm mb-2"
+                            className="btn btn-warning btn-sm mb-2"
                             onClick={handleAddToCart}   // ✔ FIXED
+                            style={{color:'#000'}}
                         >
                             Add to cart
                         </button>
 
-                        <button className="btn btn-warning btn-sm mb-2">
+                        <button className="btn btn-dark btn-sm mb-2">
                             Wishlist
                         </button>
                     </div>
                 ) : (
                     <div className="d-flex flex-column gap-2">
                         <button
-                            className="btn btn-primary btn-sm w-100"
+                            className="btn btn-warning btn-sm w-100"
                             onClick={handleAddToSubscribe}
+                            style={{color:'#000'}}
                         >
                             Add to Subscribe
                         </button>

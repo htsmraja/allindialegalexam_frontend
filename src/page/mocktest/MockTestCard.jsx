@@ -55,7 +55,7 @@ const MockTestCard = ({ b }) => {
     return (
         <article className="popular-post">
             {
-                b?.mark_as_offer && b?.offer_price && isDateActive(b.offer_start, b.offer_end) && (
+                b?.mark_as_offer && b?.offer_price && isDateActive(b.offer_start, b.offer_end) ? (
                     <span
                         className="badge bg-primary"
                         style={{
@@ -69,11 +69,8 @@ const MockTestCard = ({ b }) => {
                     >
                         IN OFFER
                     </span>
-                )
+                ) :(null)
             }
-
-
-
             <div className="aligncenter">
                 <img
 
@@ -87,23 +84,22 @@ const MockTestCard = ({ b }) => {
 
             </div>
             <div>
-                <strong className="bg-primary text-white font-lato text-uppercase price-tag">
+                <strong className="bg-primary font-lato text-uppercase price-tag">
                     {getPrice(b)}
                 </strong>
                 {b?.paper_count > 0 && (
                     <strong
-                        className="bg-secondary text-white font-lato text-uppercase price-tag"
+                        className="bg-secondary font-lato text-uppercase price-tag"
                         style={{ marginLeft: 10 }}
                     >
                         For {b?.paper_count}
                     </strong>
                 )}
-                <strong
-                    className="bg-secondary text-white font-lato text-uppercase price-tag"
-                    style={{ marginLeft: 10 }}
+                <div
+                    className="bg-secondary font-lato text-uppercase"
                 >
                     For {b?.exam_type_name}
-                </strong>
+                </div>
 
             </div>
             <h3 className="post-heading">

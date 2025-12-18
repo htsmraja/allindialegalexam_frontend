@@ -30,7 +30,7 @@ const CourseCard = ({ b }) => {
     return (
         <article className="popular-post">
             {
-                b?.mark_as_offer && b?.offer_price && isDateActive(b.offer_start, b.offer_end) && (
+                b?.mark_as_offer && b?.offer_price && isDateActive(b.offer_start, b.offer_end) ? (
                     <span
                         className="badge bg-primary"
                         style={{
@@ -44,6 +44,8 @@ const CourseCard = ({ b }) => {
                     >
                         IN OFFER
                     </span>
+                ) : (
+                    <span></span>
                 )
             }
 
