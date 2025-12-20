@@ -74,79 +74,72 @@ const Login = () => {
     return (
         <div className='innerPageBx'>
             <CommonLayout>
-
-                <section className="container user-log-block">
+                <section className='loginSignupPage'>
+                <div className="container" style={{background:'#f3f6ff'}}>
                     <div className="row">
-                        <div className="col-xs-12 col-md-6 col-md-offset-3">
-
-                            <form className="user-log-form" onSubmit={(e) => e.preventDefault()}>
-                                <h2>Login Form</h2>
-
-                                {/* MOBILE INPUT */}
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        className="form-control element-block"
-                                        placeholder="Enter mobile number"
-                                        value={mobile}
-                                        onChange={(e) => setMobile(e.target.value)}
-                                        disabled={showOtp}
-                                    />
-                                </div>
-
-                                {/* OTP INPUT */}
-                                {showOtp && (
+                        <div className="col-sm-6" align="center">
+                            <img src="assets/images/login.svg" alt="" style={{maxHeight:'230px'}} />
+                        </div>
+                        <div className="col-sm-6">
+                            <div className='bgBx'>
+                                <form onSubmit={(e) => e.preventDefault()}>
+                                    <h2 className='mt0 mb2 text-white'>Login Form</h2>
+                                    <hr className='mt0' />
+                                    {/* MOBILE INPUT */}
                                     <div className="form-group">
                                         <input
                                             type="text"
                                             className="form-control element-block"
-                                            placeholder="Enter OTP"
-                                            value={otp}
-                                            onChange={(e) => setOtp(e.target.value)}
+                                            placeholder="Enter mobile number"
+                                            value={mobile}
+                                            onChange={(e) => setMobile(e.target.value)}
+                                            disabled={showOtp}
                                         />
                                     </div>
-                                )}
-
-                                {/* BUTTONS */}
-                                <div className="btns-wrap">
-                                    <div className="wrap">
-                                        <button
-                                            type="button"
-                                            className="btn btn-theme btn-warning fw-bold font-lato text-uppercase"
-                                            onClick={handleLoginClick}
-                                        >
-                                            {showOtp ? "Verify OTP" : "Send OTP"}
-                                        </button>
-                                    </div>
-
-                                    <div className="wrap text-right">
-                                        <p>
-                                            <span
-                                                className="forget-link"
-                                                style={{
-                                                    cursor: timer === 0 ? "pointer" : "not-allowed",
-                                                    color: timer === 0 ? "#007bff" : "gray"
-                                                }}
-                                                onClick={handleResendOtp}
+                                    {/* OTP INPUT */}
+                                    {showOtp && (
+                                        <div className="form-group">
+                                            <input
+                                                type="text"
+                                                className="form-control element-block"
+                                                placeholder="Enter OTP"
+                                                value={otp}
+                                                onChange={(e) => setOtp(e.target.value)}
+                                            />
+                                        </div>
+                                    )}
+                                    {/* BUTTONS */}
+                                    <div className="btns-wrap">
+                                        <div className="d-flex" style={{alignItems:'baseline'}}>
+                                            <button
+                                                type="button"
+                                                className="btn btn-theme btn-warning fw-bold font-lato text-uppercase"
+                                                onClick={handleLoginClick}
                                             >
-                                                {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
-                                            </span>
-                                        </p>
+                                                {showOtp ? "Verify OTP" : "Send OTP"}
+                                            </button>
+                                            <p>&nbsp;&nbsp;
+                                                <span
+                                                    className="forget-link"
+                                                    style={{
+                                                        cursor: timer === 0 ? "pointer" : "not-allowed",
+                                                        color: timer === 0 ? "#ffc000" : "gray"
+                                                    }}
+                                                    onClick={handleResendOtp}
+                                                >
+                                                    {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        
                                     </div>
-                                </div>
-                            </form>
-
-                            <p>
-                                Don’t have an account?
-                                <Link className='themeColor' to="/signup">
-                                    <u>Create an Account</u>
-                                </Link>
-                            </p>
-
+                                </form>
+                                <p className='mb0'>Don’t have an account? <Link className='themeColor' to="/signup"><u>Create an Account</u></Link></p>
+                            </div>
                         </div>
                     </div>
+                </div>
                 </section>
-
             </CommonLayout>
         </div>
     )

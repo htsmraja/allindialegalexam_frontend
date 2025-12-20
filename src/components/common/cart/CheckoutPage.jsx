@@ -99,8 +99,9 @@ const Checkout = () => {
   );
 
   return (
-    <CommonLayout>
+    
       <div className="innerPageBx">
+        <CommonLayout>
         {/* Breadcrumb */}
         <nav className="breadcrumb-nav">
           <div className="container">
@@ -116,7 +117,6 @@ const Checkout = () => {
 
             {/* LEFT SIDE — Address & Payment */}
             <div className="col-md-7">
-              <h3 className="mb-3">Billing & Shipping</h3>
 
               <AddressManager
                 addressList={addressList}
@@ -128,7 +128,7 @@ const Checkout = () => {
 
               <h4 className="mb-2 mt-4">Shipping Method</h4>
               {["Delivery", "Self Pickup"].map((m) => (
-                <label key={m} className="d-block">
+                <label key={m} className="d-block" style={{marginRight:'10px'}}>
                   <input
                     type="radio"
                     name="shippingMethod"
@@ -136,31 +136,31 @@ const Checkout = () => {
                     checked={shippingMethod === m}
                     onChange={(e) => setShippingMethod(e.target.value)}
                   />{" "}
-                  {m}
+                   {m}
                 </label>
               ))}
 
               <hr />
               <h4 className="mb-2 mt-4">Payment Method</h4>
               {!hasBookOrPhysical && (
-                <label className="d-block">
+                <label className="d-block" style={{marginRight:'10px'}}>
                   <input
                     type="radio"
                     name="payment"
                     value="COD"
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  Cash on Delivery
+                  &nbsp;Cash on Delivery
                 </label>
               )}
-              <label className="d-block mt-1">
+              <label className="d-block">
                 <input
                   type="radio"
                   name="payment"
                   value="ONLINE"
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-                Online Payment
+                &nbsp;Online Payment
               </label>
 
               <hr />
@@ -238,8 +238,10 @@ const Checkout = () => {
           </div>
         </div>
         <br />
-      </div>
+        <br />
+        <br />
     </CommonLayout>
+      </div>
   );
 };
 

@@ -26,81 +26,82 @@ const SignUp = () => {
         <>
             <div className="innerPageBx">
                 <CommonLayout>
-                    <section className="container user-log-block">
-                        <div className="row">
-                            <div className="col-xs-12 col-md-6 col-md-offset-3">
+                    <section className='loginSignupPage'>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-sm-6" align="center">
+                                    <img src="assets/images/signup.svg" alt="" />
+                                </div>
+                                <div className="col-sm-6">
+                                    <div className='bgBx'>
+                                        <form className="" onSubmit={handleSubmit}>
+                                            <h2 className='mt0 mb2 text-white'>Register Form</h2>
+                                            <hr className='mt0' />
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    name="first_name"
+                                                    value={formData.first_name}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    placeholder="First Name *"
+                                                    required
+                                                />
+                                            </div>
 
-                                <form className="user-log-form" onSubmit={handleSubmit}>
-                                    <h2>Register Form</h2>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    name="last_name"
+                                                    value={formData.last_name}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    placeholder="Last Name *"
+                                                    required
+                                                />
+                                            </div>
 
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="first_name"
-                                            value={formData.first_name}
-                                            onChange={handleChange}
-                                            className="form-control"
-                                            placeholder="First Name *"
-                                            required
-                                        />
+                                            <div className="form-group">
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    placeholder="Email Address *"
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    name="mobile"
+                                                    value={formData.mobile}
+                                                    onChange={handleChange}
+                                                    className="form-control"
+                                                    placeholder="Mobile Number *"
+                                                    maxLength="10"
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="btns-wrap">
+                                                <div className="d-flex" style={{alignItems:'baseline'}}>
+                                                    <button
+                                                        type="submit"
+                                                        disabled={loading}
+                                                        className="btn btn-theme btn-warning fw-bold font-lato text-uppercase"
+                                                    >
+                                                        {loading ? "Please wait..." : "Register"}
+                                                    </button>
+                                                    &nbsp;&nbsp;
+                                                    <p>Existing user?{' '} <Link className="themeColor" to="/login"><u>Login</u></Link></p>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="last_name"
-                                            value={formData.last_name}
-                                            onChange={handleChange}
-                                            className="form-control"
-                                            placeholder="Last Name *"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="form-control"
-                                            placeholder="Email Address *"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="mobile"
-                                            value={formData.mobile}
-                                            onChange={handleChange}
-                                            className="form-control"
-                                            placeholder="Mobile Number *"
-                                            maxLength="10"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="btns-wrap">
-                                        <div className="wrap">
-                                            <button
-                                                type="submit"
-                                                disabled={loading}
-                                                className="btn btn-theme btn-warning fw-bold font-lato text-uppercase"
-                                            >
-                                                {loading ? "Please wait..." : "Register"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <p>
-                                    Existing user?{' '}
-                                    <Link className="themeColor" to="/login">
-                                        <u>Login</u>
-                                    </Link>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </section>

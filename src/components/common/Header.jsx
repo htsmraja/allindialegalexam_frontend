@@ -158,9 +158,6 @@ const Header = () => {
                                             <li>
                                                 <Link to="/book-list">Books & Notes</Link>
                                             </li>
-                                            <li>
-                                                <Link to="/cart-page">Cart : {items?.length}</Link>
-                                            </li>
                                             {/* <li className="dropdown">
                                                 <a href="javscript:void(0)" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
                                                 <ul className="dropdown-menu">
@@ -183,37 +180,42 @@ const Header = () => {
                                             <li>
                                                 <Link to="/contact-us">Contact Us</Link>
                                             </li>
+                                            <li>
+                                            <form
+                                                    action="#"
+                                                    className="navbar-form navbar-search-form navbar-right"
+                                                >
+                                                    <a
+                                                        className="fas fa-search search-opener"
+                                                        role="button"
+                                                        data-toggle="collapse"
+                                                        href="#searchCollapse"
+                                                        aria-expanded="false"
+                                                        aria-controls="searchCollapse"
+                                                    >
+                                                        <span className="sr-only">search opener</span>
+                                                    </a>
+                                                    {/* search collapse */}
+                                                    <div className="collapse search-collapse" id="searchCollapse">
+                                                        <div className="form-group">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                placeholder="Search …"
+                                                            />
+                                                            <button type="button" className="fas fa-search btn">
+                                                                <span className="sr-only">search</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </li>
+                                            <li className='cartCount'>
+                                                <Link to="/cart-page"><i className="fas fa-shopping-cart"></i> <span>{items?.length}</span></Link>
+                                            </li>
                                         </ul>
                                     </div>
                                     {/* navbar form */}
-                                    <form
-                                        action="#"
-                                        className="navbar-form navbar-search-form navbar-right"
-                                    >
-                                        <a
-                                            className="fas fa-search search-opener"
-                                            role="button"
-                                            data-toggle="collapse"
-                                            href="#searchCollapse"
-                                            aria-expanded="false"
-                                            aria-controls="searchCollapse"
-                                        >
-                                            <span className="sr-only">search opener</span>
-                                        </a>
-                                        {/* search collapse */}
-                                        <div className="collapse search-collapse" id="searchCollapse">
-                                            <div className="form-group">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Search …"
-                                                />
-                                                <button type="button" className="fas fa-search btn">
-                                                    <span className="sr-only">search</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </nav>
                             </div>
                         </div>

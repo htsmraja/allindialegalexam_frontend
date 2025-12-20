@@ -126,9 +126,9 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
     return (
         <div className="address-manager">
             {/* BILLING SECTION */}
-            <div className="mt-4">
-                <div className="d-flex justify-content-between align-items-center">
-                    <h5>Billing Addresses</h5>
+            <div className="mt15">
+                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                    <h4>Billing Addresses</h4>
                     <button
                         className="btn btn-primary btn-sm"
                         onClick={(e) => handleAddAddress(e, "billing_address")}
@@ -142,7 +142,7 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
                         {visibleBilling.map((address, index) => (
                             <div className="col-md-6" key={address.id || index}>
                                 <div
-                                    className={`miniAddressBx editBx mb-3 p-2 rounded ${selectedBillingAddressId === address.id
+                                    className={`addressEditBx ${selectedBillingAddressId === address.id
                                         ? "border activeBx"
                                         : "border inactiveBx"
                                         }`}
@@ -153,12 +153,10 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
                                     }}
                                     style={{ cursor: "pointer" }}
                                 >
-                                    <button
-                                        className="btn btn-primary btn-sm mb-2"
-                                        onClick={(e) => handleEditAddress(e, address)}
-                                    >
+                                    <button className="editBtn" onClick={(e) => handleEditAddress(e, address)}>
                                         <i className="far fa-edit"></i> Edit
                                     </button>
+                                    <button className="deleteBtn">Delete</button>
                                     <ul>
                                         <li>{address.first_name} {address.last_name}</li>
                                         <li>{address.address_line_1}</li>
@@ -212,16 +210,15 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
                     onChange={handleSameAsBilling}
                 />
                 <label htmlFor="sameAsBilling" className="form-check-label">
-                    Same as Billing Address
+                    &nbsp;Same as Billing Address
                 </label>
             </div>
-
             {/* SHIPPING SECTION */}
             {
                 !sameAsBilling && (
                     <>
 
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
                             <h5>Shipping Addresses</h5>
                             <button
                                 className="btn btn-primary btn-sm"
@@ -230,13 +227,12 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
                                 + Add Address
                             </button>
                         </div>
-
                         <div className="mt-3">
                             <div className="row">
                                 {visibleShipping.map((address, index) => (
                                     <div className="col-md-6" key={address.id || index}>
                                         <div
-                                            className={`miniAddressBx editBx mb-3 p-2 rounded ${selectedShippingAddressId === address.id
+                                            className={`addressEditBx ${selectedShippingAddressId === address.id
                                                 ? "border activeBx"
                                                 : "border inactiveBx"
                                                 }`}
@@ -247,11 +243,12 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
                                             }}
                                         >
                                             <button
-                                                className="btn btn-primary btn-sm mb-2"
+                                                className="editBtn"
                                                 onClick={(e) => handleEditAddress(e, address)}
                                             >
                                                 <i className="far fa-edit"></i> Edit
                                             </button>
+                                            <button class="deleteBtn">Delete</button>
                                             <ul>
                                                 <li>{address.first_name} {address.last_name}</li>
                                                 <li>{address.address_line_1}</li>
@@ -286,7 +283,7 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
             {/* ADD / EDIT FORM */}
             {click && (
                 <div className="newAddOrderBx mt-4">
-                    <div>
+                    <div className="editBx">
                         <h3 className="title text-uppercase ls-10 pt-1 pb-3 mb-0">
                             {editData ? "Edit Address" : "Add New Address"}
                         </h3>
@@ -319,7 +316,7 @@ const AddressManager = ({ addressList, onSelectShipping, onSelectBilling }) => {
                                 <input
                                     type="text"
                                     name="address_line_1"
-                                    className="form-control mb-2"
+                                    className="form-control mb10"
                                     value={addressInfo.address_line_1}
                                     onChange={onChangeHandler}
                                     placeholder="House number and street name"
