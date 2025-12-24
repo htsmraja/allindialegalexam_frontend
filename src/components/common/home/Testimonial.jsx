@@ -13,7 +13,7 @@ const Testimonial = () => {
   return (
     <>
       <section
-        className="testimonials-block text-center bg-gray"
+        className="testimonials-block text-center bg-gray pt60 pb50"
         style={{ backgroundImage: "url(assets/images/bg-pattern01.png)" }}
       >
         <div className="container">

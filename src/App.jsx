@@ -29,6 +29,7 @@ import SubscribeList from './components/common/cart/SubscribeList'
 import QuestionPaperList from './page/mocktest/QuestionPaperList'
 import ExamPage from './test/ExamPage'
 import StartExam from './components/common/exam/StartExam'
+import TestStartExam from './components/common/exam/TestStartExam'
 const App = () => {
   const { getCartList } = useCommonContext();
   const { isLogin, getUserProfile, token, logout } = useAuthContext();
@@ -70,6 +71,7 @@ const App = () => {
         <Route path="/cart-page" element={<CartPage />} />
         <Route path="/mock-test-list" element={<MockTesList />} />
         <Route path="/mock-test-details/:id" element={<MockTestDeatils />} />
+        <Route path="/test-start-exam" element={<TestStartExam />} />
 
         <Route path="/checkout-page" element={<ProtectedRoute />}>
           <Route index element={<CheckoutPage />} />

@@ -47,6 +47,7 @@ const QuestionPaperList = () => {
                     </div>
                 </nav>
 
+                <br /><br />
                 {/* Mock Test Info Box */}
                 <div className="container">
                     <div className="mock-info-box" style={{
@@ -56,25 +57,25 @@ const QuestionPaperList = () => {
                         boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
                         marginBottom: "25px"
                     }}>
-                        <h3 className="fw-bold mb-3">Mock Test Details</h3>
-
-                        <p className="mb-1">
+                        <h2 className="fw-bold mt0 mb0">Mock Test Details</h2>
+                        <hr className="mt5 mb5" />
+                        <p className="mb5">
                             <strong>Exam:</strong> {questionPaperList?.data?.exam_type_name}
                         </p>
-                        <p className="mb-1">
+                        <p className="mb5">
                             <strong>Title:</strong> {questionPaperList?.data?.title}
                         </p>
-                        <p className="mb-1">
+                        <p className="mb5">
                             <strong>Subtitle:</strong> {questionPaperList?.data?.subtitle}
                         </p>
-                        <p>
+                        <p className="mb0">
                             <strong>Description:</strong> {questionPaperList?.data?.description}
                         </p>
                     </div>
                 </div>
 
                 {/* Paper List Table */}
-                <section className="cart-content-block container">
+                <section className="container">
                     {papers.length === 0 ? (
                         <Empaty />
                     ) : (
@@ -158,7 +159,8 @@ const QuestionPaperList = () => {
                         </div>
                     )}
                 </section>
-
+                <br />
+                <br />
             </CommonLayout>
         </div>
     );

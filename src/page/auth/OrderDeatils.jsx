@@ -36,8 +36,8 @@ const OrderDeatils = () => {
                         </ol>
                     </div>
                 </nav>
-
-                <section className="cart-content-block container">
+                <br />
+                <section className="cart-content-block container pt0">
 
                     {/* Loader */}
                     {isLoading && (
@@ -49,47 +49,24 @@ const OrderDeatils = () => {
                     {/* MAIN DETAILS */}
                     {!isLoading && data && (
                         <>
-                            {/* ORDER SUMMARY */}
-                            <div className="card p-4 mb-4 shadow-sm">
-                                <h4 className="mb-3">Order Summary</h4>
 
-                                <div className="row">
-                                    <div className="col-md-4 mb-2">
-                                        <strong>Order Number:</strong><br />
-                                        #{data.order.order_number}
-                                    </div>
-
-                                    <div className="col-md-4 mb-2">
-                                        <strong>Date:</strong><br />
-                                        {new Date(data.order.created_at).toLocaleString()}
-                                    </div>
-
-                                    <div className="col-md-4 mb-2">
-                                        <strong>Status:</strong><br />
-                                        {data.order.order_status}
-                                    </div>
-
-                                    <div className="col-md-4 mb-2">
-                                        <strong>Payment Method:</strong><br />
-                                        {data.order.payment_method}
-                                    </div>
-
-                                    <div className="col-md-4 mb-2">
-                                        <strong>Payment Status:</strong><br />
-                                        {data.order.payment_status}
-                                    </div>
-
-                                    <div className="col-md-4 mb-2">
-                                        <strong>Total Amount:</strong><br />
-                                        ₹{data.order.total_amount}
-                                    </div>
-                                </div>
+                            {/* Order Summary start */}
+                            <h4 className="mb-3">Order Summary</h4>
+                            <div className='summaryList'>
+                                <ul>
+                                    <li><strong>Order Number:</strong> #{data.order.order_number}</li>
+                                    <li><strong>Date:</strong> {new Date(data.order.created_at).toLocaleString()}</li>
+                                    <li><strong>Status:</strong> {data.order.order_status}</li>
+                                    <li><strong>Payment Method:</strong> {data.order.payment_method}</li>
+                                    <li><strong>Payment Status:</strong> {data.order.payment_status}</li>
+                                    <li><strong>Total Amount:</strong> ₹{data.order.total_amount}</li>
+                                </ul>
                             </div>
-
+                            {/* Order Summary end */}
+                            <br />
                             {/* ORDER ITEMS TABLE */}
                             <div className="table-wrap mb-4">
                                 <h4 className="mb-3">Items</h4>
-
                                 <table className="table tab-full-responsive cart-data-table font-lato">
                                     <thead>
                                         <tr>
@@ -101,7 +78,6 @@ const OrderDeatils = () => {
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         {data.items.map((item, idx) => (
                                             <tr key={idx}>
@@ -128,34 +104,33 @@ const OrderDeatils = () => {
                                     </tbody>
                                 </table>
                             </div>
-
-                            {/* PAYMENT HISTORY */}
-                            <div className="card p-4 mb-4 shadow-sm">
-                                <h4 className="mb-3">Payment Info</h4>
-
+                            
+                            {/* PAYMENT HISTORY start */}
+                            <h4 className="mb-3">Payment Info</h4>
+                            <div>
                                 {data.payment.length === 0 ? (
                                     <p>No payment history available.</p>
                                 ) : (
-                                    <ul className="list-group">
-                                        {data.payment.map((p, i) => (
-                                            <li className="list-group-item" key={i}>
-                                                <strong>Status:</strong> {p.payment_status} <br />
-                                                <strong>Amount:</strong> ₹{p.amount} <br />
+                                <div className='summaryList'>
+                                    {data.payment.map((p, i) => (
+                                            <ul key={i}>
+                                                <li><strong>Status:</strong> {p.payment_status}</li>
+                                                <li><strong>Amount:</strong> ₹{p.amount}</li>
                                                 {p.transaction_id && (
-                                                    <>
+                                                    <li>
                                                         <strong>Transaction ID:</strong> {p.transaction_id}
-                                                    </>
+                                                    </li>
                                                 )}
-                                            </li>
+                                            </ul>
                                         ))}
-                                    </ul>
+                                </div>
                                 )}
                             </div>
-
-                            {/* ORDER HISTORY / TIMELINE */}
-                            <div className="card p-4 mb-4 shadow-sm">
-                                <h4 className="mb-3">Order Timeline</h4>
-
+                            {/* PAYMENT HISTORY end */}
+                            <br />
+                            {/* ORDER HISTORY / TIMELINE start */}
+                            <h4 className="mb-3">Order Timeline</h4>
+                            <div className='summaryList'>
                                 {data.history.length === 0 ? (
                                     <p>No order updates yet.</p>
                                 ) : (
@@ -178,6 +153,9 @@ const OrderDeatils = () => {
                                     </ul>
                                 )}
                             </div>
+                            {/* ORDER HISTORY / TIMELINE end */}
+
+                            <br />
 
                             {/* BACK BUTTON */}
                             <Link

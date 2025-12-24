@@ -3,8 +3,8 @@ import React from 'react'
 const Blogs = () => {
   return (
     <>
-      <section className="news-block container">
-        <header className="seperator-head text-center">
+      <section className="news-block container pt50 pb50">
+        <header className="seperator-head text-center mb30">
           <h2>Recent Blogs</h2>
           <p>Share your work to collaboratve with our vibrant design element.</p>
         </header>

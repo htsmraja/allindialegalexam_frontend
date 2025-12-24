@@ -42,7 +42,7 @@ const ContactUs = () => {
                   {/* detail column */}
                   <div className="detail-column">
                     <span className="icn-wrap no-shrink element-block">
-                      <img src="images/icon11.png" alt="icon" />
+                      <img src="assets/images/icon11.png" alt="icon" />
                     </span>
                     <div className="descr-wrap">
                       <h3 className="text-uppercase">give us a call</h3>
@@ -57,7 +57,7 @@ const ContactUs = () => {
                   {/* detail column */}
                   <div className="detail-column">
                     <span className="icn-wrap no-shrink element-block">
-                      <img src="images/icon12.png" alt="icon" />
+                      <img src="assets/images/icon12.png" alt="icon" />
                     </span>
                     <div className="descr-wrap">
                       <h3 className="text-uppercase">send us a message</h3>
@@ -71,7 +71,7 @@ const ContactUs = () => {
                   {/* detail column */}
                   <div className="detail-column">
                     <span className="icn-wrap no-shrink element-block">
-                      <img src="images/icon13.png" alt="icon" />
+                      <img src="assets/images/icon13.png" alt="icon" />
                     </span>
                     <div className="descr-wrap">
                       <h3 className="text-uppercase">visit our location</h3>

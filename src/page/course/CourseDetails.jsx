@@ -117,11 +117,11 @@ const CourseDetails = () => {
           <div className="row">
             {/* Left Content */}
             <article id="content" className="col-xs-12 col-md-9">
-
+              <div style={{padding:'24px 15px',border:'2px solid #fff2c9',background:'fffdf7'}}>
               {/* HEADER */}
-              <h1 className="content-h1 fw-semi">
+              <h2 className="content-h1 fw-semi">
                 {courseDetails?.data?.course?.title}
-              </h1>
+              </h2>
 
               {/* Teacher Section */}
               <header className="view-header row">
@@ -253,38 +253,30 @@ const CourseDetails = () => {
 
               {/* Reviews */}
               <Reviews />
+              </div>
             </article>
 
             {/* RIGHT SIDEBAR */}
             <aside className="col-xs-12 col-md-3" id="sidebar">
-
               {/* Selected Batch Pricing */}
-              <section className="widget widget_box widget_course_select">
-                <header className="widgetHead text-center bg-theme">
+              <section className="widget widget_box ">
+                <header className="widgetHead text-center bg-theme ml0 mr0">
                   <h3 className="text-uppercase">Take This Course</h3>
                 </header>
-
-                <strong className="price element-block font-lato">
-                  {getPrice(courseDetails?.data?.course)}
-                </strong>
-
-
+                <h3 className="mb20">{getPrice(courseDetails?.data?.course)}</h3>
                 <ul className="list-unstyled font-lato">
                   <li>
                     <i className="far fa-clock" /> Duration:
                     {getDuration(selectedBatch?.start_date, selectedBatch?.end_date)} days
                   </li>
-
                   <li>
                     <i className="far fa-user" /> Instructor:
                     {selectedBatch?.teacher?.name}
                   </li>
-
                   <li>
                     <i className="far fa-calendar" /> Starting:
                     {selectedBatch?.start_date?.split("T")[0]}
                   </li>
-
                   <li>
                     <i className="far fa-clock" /> Class Schedule:
                     <ul style={{ marginLeft: 20, marginTop: 5 }}>
@@ -315,7 +307,7 @@ const CourseDetails = () => {
                 </button> */}
 
 
-                <div>
+                <div className="mb15">
                   {courseDetails?.data?.course?.is_subscription_allowed ? (
                     <div className="d-flex flex-column gap-2">
                       <button

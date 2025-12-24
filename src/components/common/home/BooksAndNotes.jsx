@@ -22,9 +22,7 @@ const BooksAndNotes = () => {
 
   return (
     <section className="container">
-      <br />
-
-      <header className="block-header">
+      <header className="block-header mb30">
         <div className="pull-left">
           <h2 className="block-header-heading">Books & Notes</h2>
           <p>Recent and upcoming educational events listed here</p>

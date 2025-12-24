@@ -50,11 +50,11 @@ const Courses = () => {
 
     return (
         <>
-            <section className="popular-posts-block container coursesPart">
+            <section className="popular-posts-block container coursesPart pt50 pb25">
                 <header className="popular-posts-head">
                     {/* <h2 className="popular-head-heading">Most Popular Courses</h2> */}
                     <div className="pull-left">
-                        <h2 className="block-header-heading">Most Popular Courses</h2>
+                        <h2 className="block-header-heading mt0">Most Popular Courses</h2>
                         <p>Recent and upcoming educational events listed here</p>
                     </div>
                     <Link to="/course-list" className="btn btn-default text-uppercase pull-right">

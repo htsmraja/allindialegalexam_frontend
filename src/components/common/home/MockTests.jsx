@@ -19,8 +19,8 @@ const MockTests = () => {
     const isLoading = mockTestList?.loading;
     return (
         <>
-            <section className="upcoming-events-block container" style={{ paddingTop: '50px', paddingBottom: '73px' }}>
-                <header className="block-header">
+            <section className="upcoming-events-block container pt0 pb0">
+                <header className="block-header mb30">
                     <div className="pull-left">
                         <h2 className="block-header-heading">Mock Tests</h2>
                         <p>Recent and upcoming educational events listed here</p>
