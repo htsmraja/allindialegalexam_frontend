@@ -1,38 +1,55 @@
-// import React from 'react'
 
 // const MatchColumn = ({ question, answer = {}, saveAnswer }) => {
-
-//     const handleMatch = (index, value) => {
+//     const handleSelect = (leftPos, rightPos) => {
 //         saveAnswer(question.question_id, {
 //             ...answer,
-//             [index]: value
+//             [leftPos]: Number(rightPos),   // FIXED
 //         });
 //     };
 
 //     return (
 //         <div>
-//             <h4>{question.question_text}</h4>
+//             <h3>{question.question_text}</h3>
 
-//             {question.match_left.map((item, i) => (
-//                 <div key={i} style={{ marginBottom: 10 }}>
-//                     {item} →
-//                     <select
-//                         value={answer[i] || ""}
-//                         onChange={(e) => handleMatch(i, e.target.value)}
-//                     >
-//                         <option value="">Select</option>
-//                         {question.match_right.map((opt, j) => (
-//                             <option key={j} value={opt}>
-//                                 {opt}
-//                             </option>
-//                         ))}
-//                     </select>
-//                 </div>
-//             ))}
+//             <table border="1" cellPadding="8" style={{ width: "100%" }}>
+//                 <thead>
+//                     <tr>
+//                         <th>Left</th>
+//                         <th>Match</th>
+//                         <th>Right</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {question.match_left.map((left, index) => (
+//                         <tr key={index}>
+//                             <td>{left}</td>
+
+//                             <td>
+//                                 <select
+//                                     value={answer[index] || ""}
+//                                     onChange={(e) => handleSelect(index, e.target.value)}
+//                                 >
+//                                     <option value="">Select</option>
+
+//                                     {question.match_right.map((right, rIndex) => (
+//                                         <option key={rIndex} value={rIndex}>
+//                                             {right}
+//                                         </option>
+//                                     ))}
+//                                 </select>
+//                             </td>
+
+//                             <td>
+//                                 {question.match_right[answer[index]] || ""}
+//                             </td>
+//                         </tr>
+//                     ))}
+//                 </tbody>
+//             </table>
 //         </div>
-//     )
-// }
-
+//     );
+// };
+// export default MatchColumn
 
 
 
@@ -45,44 +62,49 @@ const MatchColumn = ({ question, answer = {}, saveAnswer }) => {
     };
 
     return (
-        <div>
-            <h3>{question.question_text}</h3>
+        <div className='innerDtl'>
+            <h4 className='mb20'>{question.question_text}</h4>
 
-            <table border="1" cellPadding="8" style={{ width: "100%" }}>
-                <thead>
-                    <tr>
-                        <th>Left</th>
-                        <th>Match</th>
-                        <th>Right</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {question.match_left.map((left, index) => (
-                        <tr key={index}>
-                            <td>{left}</td>
-
-                            <td>
-                                <select
-                                    value={answer[index] || ""}
-                                    onChange={(e) => handleSelect(index, e.target.value)}
-                                >
-                                    <option value="">Select</option>
-
-                                    {question.match_right.map((right, rIndex) => (
-                                        <option key={rIndex} value={rIndex}>
-                                            {right}
-                                        </option>
-                                    ))}
-                                </select>
-                            </td>
-
-                            <td>
-                                {question.match_right[answer[index]] || ""}
-                            </td>
+            <div className='table-responsive'>
+                <table className='table table-bordered table-sm bg-light'>
+                    <thead>
+                        <tr>
+                            <th>Left</th>
+                            <th>Match</th>
+                            <th>Right</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {question.match_left.map((left, index) => (
+                            <tr key={index}>
+                                <td>{left}</td>
+
+                                <td>
+                                    <select
+                                        className='form-control pt0 input-sm' style={{ maxWidth: '250px' }}
+                                        value={answer[index] || ""}
+                                        onChange={(e) => handleSelect(index, e.target.value)}
+                                    >
+                                        <option value="">Select</option>
+
+                                        {question.match_right.map((right, rIndex) => (
+                                            <option key={rIndex} value={rIndex}>
+                                                {right}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </td>
+
+                                <td>
+                                    {question.match_right[answer[index]] || ""}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+            </div>
+
         </div>
     );
 };

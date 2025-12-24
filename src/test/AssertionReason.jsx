@@ -9,22 +9,28 @@ const AssertionReason = ({ question, answer, saveAnswer }) => {
     ];
 
     return (
-        <div>
-            <h4>Assertion: {question.assertion}</h4>
-            <h4>Reason: {question.reason}</h4>
+        <div className='innerDtl'>
+            <h4 className='mb20'>Assertion: {question.assertion}</h4>
+            <h4 className='mb20'>Reason: {question.reason}</h4>
+            <div>
+                <div className='row'>
+                    {options.map((opt) => (
+                        <div className='col-sm-6 mb5' key={opt.value} >
+                            <label style={{ display: "block" }}>
+                                <input
+                                    type="radio"
+                                    name={question.question_id}
+                                    value={opt.value}
+                                    checked={answer === opt.value}
+                                    onChange={() => saveAnswer(question.question_id, opt.value)}
+                                />
+                                {opt.label}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-            {options.map((opt) => (
-                <label key={opt.value} style={{ display: "block" }}>
-                    <input
-                        type="radio"
-                        name={question.question_id}
-                        value={opt.value}
-                        checked={answer === opt.value}
-                        onChange={() => saveAnswer(question.question_id, opt.value)}
-                    />
-                    {opt.label}
-                </label>
-            ))}
         </div>
     )
 }

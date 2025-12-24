@@ -46,7 +46,7 @@ const TestStartExam = () => {
                     <label htmlFor="">0 Word</label>
                   </div>
 
-                  <p style={{fontWeight:'bold'}}>this is a text <input type="text" /> sample</p>
+                  <p style={{ fontWeight: 'bold' }}>this is a text <input type="text" /> sample</p>
 
                   <div className='table-responsive'>
                     <table className='table table-bordered table-sm bg-light'>
@@ -61,7 +61,7 @@ const TestStartExam = () => {
                         <tr>
                           <td>Mandamus</td>
                           <td>
-                            <select className='form-control pt0 input-sm' style={{maxWidth:'250px'}}>
+                            <select className='form-control pt0 input-sm' style={{ maxWidth: '250px' }}>
                               <option value="">Select</option>
                               <option value={0}>Command Government</option>
                               <option value={1}>Quash lower court order</option>
@@ -74,7 +74,7 @@ const TestStartExam = () => {
                         <tr>
                           <td>Certiorari</td>
                           <td>
-                            <select className='form-control pt0 input-sm' style={{maxWidth:'250px'}}>
+                            <select className='form-control pt0 input-sm' style={{ maxWidth: '250px' }}>
                               <option value="">Select</option>
                               <option value={0}>Command Government</option>
                               <option value={1}>Quash lower court order</option>
@@ -87,7 +87,7 @@ const TestStartExam = () => {
                         <tr>
                           <td>Prohibition</td>
                           <td>
-                            <select className='form-control pt0 input-sm' style={{maxWidth:'250px'}}>
+                            <select className='form-control pt0 input-sm' style={{ maxWidth: '250px' }}>
                               <option value="">Select</option>
                               <option value={0}>Command Government</option>
                               <option value={1}>Quash lower court order</option>
@@ -100,7 +100,7 @@ const TestStartExam = () => {
                         <tr>
                           <td>Habeas Corpus</td>
                           <td>
-                            <select className='form-control pt0 input-sm' style={{maxWidth:'250px'}}>
+                            <select className='form-control pt0 input-sm' style={{ maxWidth: '250px' }}>
                               <option value="">Select</option>
                               <option value={0}>Command Government</option>
                               <option value={1}>Quash lower court order</option>
@@ -179,13 +179,13 @@ const TestStartExam = () => {
                     <li><button>30</button></li>
                   </ul>
                 </div>
-                  <div className='indicator'>
-                    <ul>
-                      <li className='current'><span></span> Current</li>
-                      <li className='answered'><span></span> Answered</li>
-                      <li><span></span> Not Attempted</li>
-                    </ul>
-                  </div>
+                <div className='indicator'>
+                  <ul>
+                    <li className='current'><span></span> Current</li>
+                    <li className='answered'><span></span> Answered</li>
+                    <li><span></span> Not Attempted</li>
+                  </ul>
+                </div>
               </div>
             </div>
             {/* right part end */}

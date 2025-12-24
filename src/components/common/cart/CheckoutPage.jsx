@@ -30,7 +30,7 @@ const Checkout = () => {
   const getPrice = (item) => {
     // -------------------- FREE ITEMS --------------------
     if (item.product_type === "book" && item.book_is_free === 1) return 0;
-    if (item.product_type === "course" && item.course_is_free === 1) return 0;
+    if (item.product_type === "course" && item.course_is_free === 0) return 0;
     if (item.product_type === "mock_test" && item.mock_test_is_free === 0) return 0;
 
     // -------------------- BOOK PRICES --------------------
@@ -99,9 +99,9 @@ const Checkout = () => {
   );
 
   return (
-    
-      <div className="innerPageBx">
-        <CommonLayout>
+
+    <div className="innerPageBx">
+      <CommonLayout>
         {/* Breadcrumb */}
         <nav className="breadcrumb-nav">
           <div className="container">
@@ -128,7 +128,7 @@ const Checkout = () => {
 
               <h4 className="mb-2 mt-4">Shipping Method</h4>
               {["Delivery", "Self Pickup"].map((m) => (
-                <label key={m} className="d-block" style={{marginRight:'10px'}}>
+                <label key={m} className="d-block" style={{ marginRight: '10px' }}>
                   <input
                     type="radio"
                     name="shippingMethod"
@@ -136,14 +136,14 @@ const Checkout = () => {
                     checked={shippingMethod === m}
                     onChange={(e) => setShippingMethod(e.target.value)}
                   />{" "}
-                   {m}
+                  {m}
                 </label>
               ))}
 
               <hr />
               <h4 className="mb-2 mt-4">Payment Method</h4>
               {!hasBookOrPhysical && (
-                <label className="d-block" style={{marginRight:'10px'}}>
+                <label className="d-block" style={{ marginRight: '10px' }}>
                   <input
                     type="radio"
                     name="payment"
@@ -240,8 +240,8 @@ const Checkout = () => {
         <br />
         <br />
         <br />
-    </CommonLayout>
-      </div>
+      </CommonLayout>
+    </div>
   );
 };
 

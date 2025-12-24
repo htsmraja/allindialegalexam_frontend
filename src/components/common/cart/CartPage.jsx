@@ -15,7 +15,7 @@ const CartPage = () => {
   const [quantities, setQuantities] = useState({});
 
   const items = cartlistData?.data?.items || [];
-
+  console.log(items, "items")
   useEffect(() => {
     const qtyMap = {};
     items.forEach((item) => {
@@ -30,7 +30,7 @@ const CartPage = () => {
   const getItemPrice = (item) => {
     // -------------------- FREE ITEMS --------------------
     if (item.product_type === "book" && item.book_is_free === 1) return "FREE";
-    if (item.product_type === "course" && item.course_is_free === 1) return "FREE";
+    if (item.product_type === "course" && item.course_is_free === 0) return "FREE";
     if (item.product_type === "mock_test" && item.mock_test_is_free === 0) return "FREE";
 
     // -------------------- BOOK PRICES --------------------
