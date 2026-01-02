@@ -26,7 +26,7 @@ const Header = () => {
                 <div className="top-bar bg-dark text-gray">
                     <div className="container">
                         <div className="row top-bar-holder">
-                            <div className="col-xs-9 col">
+                            <div className="col-xs-9 col left-links">
                                 {/* bar links */}
                                 <ul className="font-lato list-unstyled bar-links">
                                     <li>
@@ -57,7 +57,7 @@ const Header = () => {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="col-xs-3 col justify-end">
+                            <div className="col-xs-3 col justify-end userDtl">
                                 {/* user links */}
                                 <ul className="list-unstyled user-links fw-bold font-lato">
                                     {
@@ -89,7 +89,7 @@ const Header = () => {
                 <div className="header-holder">
                     <div className="container">
                         <div className="row">
-                            <div className="col-xs-6 col-sm-3">
+                            <div className="col-xs-12 col-sm-3 logoBx">
                                 {/* logo */}
                                 <div className="logo">
                                     <Link to="/">
@@ -106,9 +106,9 @@ const Header = () => {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="col-xs-6 col-sm-9 static-block">
+                            <div className="col-xs-12 col-sm-9 static-block">
                                 {/* nav */}
-                                <nav id="nav" className="navbar navbar-default">
+                                <nav id="nav" className="navbar navbar-default mainNav">
                                     <div className="navbar-header">
                                         <button
                                             type="button"
@@ -134,46 +134,12 @@ const Header = () => {
                                             <li>
                                                 <Link to="/about-us">About Us</Link>
                                             </li>
-                                            {/* <li className="dropdown">
-                                                <a
-                                                    href="#"
-                                                    className="dropdown-toggle"
-                                                    data-toggle="dropdown"
-                                                    role="button"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                >
-                                                    Courses
-                                                </a>
-                                                <ul className="dropdown-menu">
-                                                    <li>
-                                                        <a href="javascript:void(0)">Course List</a>
-                                                    </li>
-
-                                                </ul>
-                                            </li> */}
                                             <li>
                                                 <Link to="/course-list">Courses</Link>
                                             </li>
                                             <li>
                                                 <Link to="/book-list">Books & Notes</Link>
                                             </li>
-                                            {/* <li className="dropdown">
-                                                <a href="javscript:void(0)" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                                <ul className="dropdown-menu">
-                                                    <li><Link to="/about-us">About us</Link></li>
-                                                    <li><Link to="/login">Login</Link></li>
-                                                    <li><Link to="/signup">Signup</Link></li>
-                                                    <li><Link to="/book-list">Book List</Link></li>
-                                                    <li><Link to="/book-details">Book Details</Link></li>
-                                                    <li><Link to="/course-list">Course List</Link></li>
-                                                    <li><Link to="/course-deatils">Course Deatils</Link></li>
-                                                    <li><Link to="/cart-page">cart-page</Link></li>
-                                                    <li><Link to="/checkout-page">checkout-page</Link></li>
-                                                    <li><Link to="/my-account">my-account</Link></li>
-                                                    <li><Link to="/wishlist-page">wishlist-page</Link></li>
-                                                </ul>
-                                            </li> */}
                                             <li>
                                                 <Link to="/">Mock Tests</Link>
                                             </li>

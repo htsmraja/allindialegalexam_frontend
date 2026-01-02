@@ -30,6 +30,18 @@ import QuestionPaperList from './page/mocktest/QuestionPaperList'
 import ExamPage from './test/ExamPage'
 import StartExam from './components/common/exam/StartExam'
 import TestStartExam from './components/common/exam/TestStartExam'
+import PersonalDetails from './components/common/my-account/profile/PersonalDetails'
+import AcademicInfo from './components/common/my-account/profile/AcademicInfo'
+import ProfilePicture from './components/common/my-account/profile/ProfilePicture'
+import ContactDetails from './components/common/my-account/profile/ContactDetails'
+import ChangePassword from './components/common/my-account/profile/ChangePassword'
+import ManageAddress from './components/common/my-account/profile/ManageAddress'
+import ReferralWallet from './components/common/my-account/profile/ReferralWallet'
+import EnrolledCourses from './components/common/my-account/courses/EnrolledCourses'
+import BatchDetails from './components/common/my-account/courses/BatchDetails'
+import MockTestListLayout from './components/common/my-account/exams/MockTestList'
+import PerformanceChart from './components/common/my-account/performance/PerformanceChart'
+import Dashboard from './components/common/my-account/dashboard/Dashboard'
 const App = () => {
   const { getCartList } = useCommonContext();
   const { isLogin, getUserProfile, token, logout } = useAuthContext();
@@ -77,20 +89,30 @@ const App = () => {
           <Route index element={<CheckoutPage />} />
         </Route>
         <Route path="/my-account" element={<ProtectedRoute />}>
-          <Route index element={<MyAccount />} />
+          <Route element={<MyAccount />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile/personal-details" element={<PersonalDetails />} />
+            <Route path="profile/academic-info" element={<AcademicInfo />} />
+            <Route path="profile/profile-picture" element={<ProfilePicture />} />
+            <Route path="profile/contact-guardian" element={<ContactDetails />} />
+            <Route path="profile/change-password" element={<ChangePassword />} />
+            <Route path="profile/manage-address" element={<ManageAddress />} />
+            <Route path="profile/referral-wallet" element={<ReferralWallet />} />
+
+            <Route path="courses/enrolled" element={<EnrolledCourses />} />
+            <Route path="courses/batch-details" element={<BatchDetails />} />
+
+            <Route path="exams/mock-tests" element={<MockTestListLayout />} />
+            <Route path="performance" element={<PerformanceChart />} />
+
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="order-list" element={<OrderList />} />
+            <Route path="order-details" element={<OrderDeatils />} />
+            <Route path="my-subscription" element={<SubscribeList />} />
+          </Route>
         </Route>
-        <Route path="/wishlist-page" element={<ProtectedRoute />}>
-          <Route index element={<Wishlist />} />
-        </Route>
-        <Route path="/order-list" element={<ProtectedRoute />}>
-          <Route index element={<OrderList />} />
-        </Route>
-        <Route path="/order-details" element={<ProtectedRoute />}>
-          <Route index element={<OrderDeatils />} />
-        </Route>
-        <Route path="/my-subscribtion" element={<ProtectedRoute />}>
-          <Route index element={<SubscribeList />} />
-        </Route>
+
         <Route path="/question-paper-list" element={<ProtectedRoute />}>
           <Route index element={<QuestionPaperList />} />
           <Route path="start-exam" element={<StartExam />} />
